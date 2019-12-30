@@ -44,15 +44,16 @@ function replaceClass(elm, replaceClass, replaceWith = null) {
         function urlChanged() {
             const field = this;
             const currValue = safeGetValue(field);
-
-            if (lastUrlValue !== currValue && currValue.length > 5) {
-                replaceClass(field, fieldError, fieldSuccess);
-                keyField.style.display = 'block';
-            } else {
-                replaceClass(field, fieldSuccess, fieldError);
-                keyField.style.display = 'none';
+            if (lastUrlValue !== currValue) {
+                if (currValue.length > 5) {
+                    replaceClass(field, fieldError, fieldSuccess);
+                    keyField.style.display = 'block';
+                } else {
+                    replaceClass(field, fieldSuccess, fieldError);
+                    keyField.style.display = 'none';
+                }
+                lastUrlValue = currValue;    
             }
-            lastUrlValue = currValue;
         }
         function keyChanged() {
             const field = this;
