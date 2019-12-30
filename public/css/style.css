@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css?family=Arvo|Grand+Hotel&display=swap");
+html {
+  font-size: 20px;
+}
+
+body {
+  background-color: #D0E9F2;
+  color: #02000D;
+}
+
+body,
+p,
+form,
+input,
+button {
+  font-family: "Arvo", serif;
+}
+
+input, button {
+  padding: 0.5rem 1rem;
+}
+
+input {
+  background-color: #D0E9F2;
+  border: 1px solid #02000D;
+}
+input:focus {
+  border-color: #3C56A6;
+}
+
+button {
+  background-color: #3C56A6;
+  color: #D0E9F2;
+  border: none;
+  outline: none;
+}
+button:hover {
+  box-shadow: 0 5px 5px rgba(2, 0, 13, 0.2);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Grand Hotel", cursive;
+}
+
+/*# sourceMappingURL=style.css.map */
