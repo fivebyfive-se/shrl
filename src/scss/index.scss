@@ -1,0 +1,60 @@
+@import 'common';
+
+input, button {
+    padding: .5rem 1rem;
+    border: 1px solid $color-black;
+    border-radius: .2rem;
+}
+
+.form {
+    $self: &;
+    display: flex;
+    flex-direction: column;
+
+    #{$self}__section {
+        display: block;
+        margin: .5rem;
+    }
+    #{$self}__field {
+        &--display:not(:focus) {
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            color: inherit;
+            border: none;
+        }
+    }
+}
+label {
+    display: block;
+    font-size: .7rem;
+}
+
+input {
+    background-color: $color-light;
+    color: $color-black;
+
+    &:focus {
+        border-color: $color-blue;
+    }
+    &.error {
+        border-color: $color-red;
+    }
+    &.success {
+        border-color: $color-green;
+    }
+}
+button {
+    background-color: $color-black;
+    color: $color-light;
+    border: none;
+    outline: none;
+    &:hover {
+        box-shadow: 0 5px 5px rgba($color-black, .2);
+    }
+}
+
+#shortened {
+    display: none;
+}
