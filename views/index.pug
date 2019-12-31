@@ -1,22 +1,16 @@
-doctype html
-html
-    head
-        title SHRL
-    body
-        header
-            h1 Shrl
-        main
-            section
-                form.form
-                    div#url-container.form__section
-                        label(for="url") URL to shorten:
-                        input(type="text", id="url", placeholder="URL to shorten...")
-                    div#shortened.form__section
-                        label(for="result") Shortened URL:
-                        span https://shrl.cc/
-                        input#result.form__field.form__field--display(type="text", value=suggestion)
-                    div.form__section
-                        button(type="submit") Create shortened link
-        footer
-        link(rel="stylesheet", href="/css/index.css")
-        script(src="/js/app.js")
+extends ./layout/page.pug
+
+block content
+    form.form
+        div#url-container.form__section
+            label(for="url") URL to shorten:
+            input.form__field.form__field--fill(type="text", id="url", placeholder="URL to shorten...")
+        div#shortened.form__section
+            label(for="result") Shortened URL:
+            span https://shrl.cc/
+            input#result.form__field.form__field--display(type="text", value=suggestion)
+        div.form__section
+            button.form__button.form__button--fill(type="submit") Create shortened link
+
+block scripts
+    script(src="/js/home.js")

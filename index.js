@@ -2,96 +2,64 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
 const parse = require('url-parse');
-const Redis = require('ioredis');
 const randomString = require('crypto-random-string');
-
-const redis = new Redis(process.env.REDIS_URL);
+const redis = require('./src/rediswrapper');
 
 const PORT = process.env.PORT || 80;
-const URL_PREFIX = process.env.URL_KEY_PREFIX || 'url_';
+const APP_NAME = process.env.APP_NAME || 'shrl';
 
-const prefixKey = (key) => {
-    return URL_PREFIX + (key || '').replace(/\W+/gi, '');
-};
-const safeExists = async (key) => {
-    const realKey = prefixKey(key);
-    if (realKey === URL_PREFIX) {
-        return false;
-    }
-    try {
-        const exists = await redis.exists(realKey);
-        return !!exists;
-    } catch {
-        return false;
-    }
-};
-const safeGet = async (key) => {
-    const realKey = prefixKey(key);
-    if (realKey === URL_PREFIX) {
-        return Promise.reject(null);
-    }
-    try {
-        const value = await redis.get(realKey);
-        return value || null;
-    } catch {
-        return Promise.reject(null);
-    }
-};
-const safeSet = async (key, value) => {
-    const keyExists = await safeExists(key);
 
-    if (!keyExists) {
-        const realKey = prefixKey(key);
-        try {
-            const res = await redis.set(realKey, value);
-            return !!res;
-        } catch (e) {
-            return Promise.reject(null);
-        }
-    }
-    return Promise.reject(null);
-};
+const defaultVars = { title: APP_NAME };
 
 express()
     .use(bodyParser.json({type: '*/json'}))
     .use(express.static(path.join(__dirname, 'public')))
+
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'pug')
-    .get('/', (_, res) => {
+
+    .get('/', (req, res) => {
         const suggestion = randomString({length: 6, type: 'url-safe'});
-        res.render('index', { suggestion });
+        res.render('index', { ...defaultVars, suggestion });
     })
-    .get('/url/:key', (req, res) => {
-        safeExists(req.params.key)
-            .then((found) => res.send({ found }))
-            .catch(() => res.status(400));
+
+    .get('/url/:key', async (req, res) => {
+        const found = await redis.exists(req.params.key);
+        res.send({ found });
     })
-    .post('/url/:key', (req, res) => {
+    .post('/url/:key', async (req, res) => {
+        const key = req.params.key;
         const url = req.body.url || null;
-        safeSet(req.params.key, url)
-            .then(
-                (success) => res.send({ key: req.params.key, url, success }),
-                () => res.status(400)
-            ).catch(() => res.status(400));
+        const success = key && url ? (await redis.set(key, url)) : false;
+
+        res.send({ key, url, success });
     })
-    .get('/:key', (req, res) => {
-        safeGet(req.params.key)
-            .then(
-                (url) => {
-                    const parsedUrl = parse(url);
-                    console.log(parsedUrl);
-                    let displayUrl = url;
-                    Object.keys(parsedUrl).forEach((k) => {
-                        const val = parsedUrl[k] || '';
-                        if (val.length > 1) {
-                            displayUrl = displayUrl.replace(val, `<span class="url__part--${k}">${val}</span>`)
-                        }
-                    });
-                    res.render('redirect', { url: parsedUrl.href, hostname: parsedUrl.hostname, displayUrl } );
-                },
-                () => res.status(400)
-            ).catch(() => res.status(400));
+
+    .get('/:key', async (req, res) => {
+        const url = await redis.get(req.params.key);
+        if (url) {
+            const parsedUrl = parse(url);
+            const { href, hostname } = { ...parsedUrl }; 
+            const displayUrl = Object.keys(parsedUrl).reduce((prev, part) => {
+                const val = parsedUrl[part];
+                return (val && val.length > 1) 
+                    ? prev.replace(val, `<span class="url__part--${part}">${val}</span>`)
+                    : prev;
+            }, parsedUrl.toString());
+            
+            res.render('redirect', {
+                ...defaultVars, 
+                success: true, 
+                href, 
+                hostname, 
+                displayUrl, 
+                subtitle: `Redirecting to ${hostname}` 
+            });    
+        } else {
+            res.render('redirect', { ...defaultVars, success: false, error: `${req.params.key} not found!` })
+        }
     })
+
     .listen(PORT, () => {
         console.log(`Listening on ${PORT}`);
     });

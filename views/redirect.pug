@@ -1,14 +1,13 @@
-doctype html
-html
-    head
-        title SHRL: Redirecting to #{hostname}
-        meta(http-equiv="refresh", content="5," + url)
-    body
-        header
-            h1 Shrl
-        main
-            p
-                span.preamble Redirecting to
-                a.url(href=url) !{displayUrl}
-        footer
-        link(rel="stylesheet", href="/css/redirect.css")
+extends ./layout/page.pug
+
+block head
+    if success
+        meta(http-equiv="refresh", content="5," + href)
+
+block content
+    p
+        if success
+            span.preamble Redirecting to
+            a.url(href=href) !{displayUrl}
+        else
+            span.error #{title}

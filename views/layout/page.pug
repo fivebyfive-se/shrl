@@ -1,0 +1,18 @@
+doctype html
+html
+    head
+        if subtitle
+            title #{title}: #{subtitle}
+        else
+            title #{title}
+        block head
+    body
+        header
+            h1 #{title}
+            if subtitle
+                h2 #{subtitle}
+        main
+            block content
+        footer
+        link(rel="stylesheet", href="/css/style.css")
+        block scripts

@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css?family=Arvo|Grand+Hotel&display=swap');
+
+$color-black: #02000D;
+$color-blue: #3C56A6;
+$color-green: #3CA656;
+$color-light: #D0E9F2;
+$color-red: #8C1C03;
+
+html {
+    font-size: 20px;
+}
+
+body {
+    background-color: $color-light;
+    color: $color-black;
+    line-height: 1.2;
+}
+
+body,
+p,
+form,
+input,
+button {
+    box-sizing: border-box;
+    font-family: 'Arvo', serif;
+    font-size: 1rem;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Grand Hotel', cursive;
+    line-height: 1;
+}
+h1 {
+    font-size: 4rem;
+}
+a {
+    color: $color-light;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+header, main, footer {
+    width: 600px;
+    max-width: 99%;
+    margin: 0 auto;
+}
+
+input, button {
+    padding: .5rem 1rem;
+    border: 1px solid $color-black;
+    border-radius: .2rem;
+}
+
+.form {
+    $self: &;
+    display: flex;
+    flex-direction: column;
+
+    #{$self}__section {
+        display: block;
+        margin: .5rem;
+    }
+    #{$self}__field {
+        &--display {
+            padding: .2rem;
+            padding-left: 0;
+
+            &:not(:focus) {
+                cursor: pointer;
+                background: transparent;
+                color: $color-blue;
+                border: none;
+            }
+        }
+    }
+    #{$self}__field,
+    #{$self}__button {
+        &--fill {
+            width: 100%;
+        }
+    }
+}
+label {
+    display: block;
+    font-size: .7rem;
+}
+
+input {
+    background-color: $color-light;
+    color: $color-black;
+
+    &:focus {
+        border-color: $color-blue;
+    }
+    &.error {
+        border-color: $color-red;
+    }
+    &.success {
+        border-color: $color-green;
+    }
+}
+button {
+    background-color: $color-black;
+    color: $color-light;
+    border: none;
+    outline: none;
+    &:hover {
+        box-shadow: 0 5px 5px rgba($color-black, .2);
+    }
+}
+
+#shortened {
+    display: none;
+}
+
+.preamble {
+    margin-right: .5rem;
+}
+
+.url {
+    font-weight: normal;
+    &__part--auth {
+        display: none;
+    }
+    &__part--hostname {
+        font-weight: bold;
+    }
+}

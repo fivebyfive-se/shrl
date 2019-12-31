@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css?family=Arvo|Grand+Hotel&display=swap");
+html {
+  font-size: 20px;
+}
+
+body {
+  background-color: #D0E9F2;
+  color: #02000D;
+  line-height: 1.2;
+}
+
+body,
+p,
+form,
+input,
+button {
+  box-sizing: border-box;
+  font-family: "Arvo", serif;
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Grand Hotel", cursive;
+  line-height: 1;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+a {
+  color: #D0E9F2;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+header, main, footer {
+  width: 600px;
+  max-width: 99%;
+  margin: 0 auto;
+}
+
+input, button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #02000D;
+  border-radius: 0.2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.form .form__section {
+  display: block;
+  margin: 0.5rem;
+}
+.form .form__field--display {
+  padding: 0.2rem;
+  padding-left: 0;
+}
+.form .form__field--display:not(:focus) {
+  cursor: pointer;
+  background: transparent;
+  color: #3C56A6;
+  border: none;
+}
+.form .form__field--fill,
+.form .form__button--fill {
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-size: 0.7rem;
+}
+
+input {
+  background-color: #D0E9F2;
+  color: #02000D;
+}
+input:focus {
+  border-color: #3C56A6;
+}
+input.error {
+  border-color: #8C1C03;
+}
+input.success {
+  border-color: #3CA656;
+}
+
+button {
+  background-color: #02000D;
+  color: #D0E9F2;
+  border: none;
+  outline: none;
+}
+button:hover {
+  box-shadow: 0 5px 5px rgba(2, 0, 13, 0.2);
+}
+
+#shortened {
+  display: none;
+}
+
+.preamble {
+  margin-right: 0.5rem;
+}
+
+.url {
+  font-weight: normal;
+}
+.url__part--auth {
+  display: none;
+}
+.url__part--hostname {
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=style.css.map */
