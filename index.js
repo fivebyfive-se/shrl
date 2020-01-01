@@ -8,12 +8,18 @@ const redis = require('./src/rediswrapper');
 const PORT = process.env.PORT || 80;
 const APP_NAME = process.env.APP_NAME || 'shrl';
 
-
 const defaultVars = { title: APP_NAME };
 
 express()
     .use(bodyParser.json({type: '*/json'}))
     .use(express.static(path.join(__dirname, 'public')))
+    .use((req, res, next) => {
+        if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] !== 'https'){
+            console.log( 'forceSSL req.get = ' + req.get('Host') + ' req.url = ' + req.url );
+            return res.redirect('https://' + req.get('Host') + req.url );
+        }
+        next();
+    })
 
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'pug')
