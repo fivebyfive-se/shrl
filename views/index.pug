@@ -1,16 +1,22 @@
 extends ./layout/page.pug
 
 block content
-    form.form
+    form#main-form.form
         div#url-container.form__section
             label(for="url") URL to shorten:
-            input.form__field.form__field--fill(type="text", id="url", placeholder="URL to shorten...")
+            .form__field-container.form__field-container--with-icon
+                input#url.form__field.form__field--fill(type="text", placeholder="URL to shorten...")
+                i.material-icons.form__field__icon.form__field__icon--left link
         div#shortened.form__section
-            label(for="result") Shortened URL:
-            span https://shrl.cc/
-            input#result.form__field.form__field--display(type="text", value=suggestion)
+            .form__field-container.form__field-container--with-icon
+                label(for="result") Shortened URL:
+                span https://shrl.cc/
+                input#key.form__field.form__field--display(type="text", value=suggestion)
+                i.material-icons.form__field__icon.form__field__icon--left vpn_key
         div.form__section
-            button.form__button.form__button--fill(type="submit") Create shortened link
+            button#submit-button.form__button.form__button--fill(type="submit")
+                span Create shortened link
+    div#result
 
 block scripts
     script(src="/js/home.js")
