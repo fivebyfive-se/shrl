@@ -4,6 +4,7 @@
   "description": "URL shortener",
   "main": "index.js",
   "scripts": {
+    "build": "grunt build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,5 +21,13 @@
     "path": "^0.12.7",
     "pug": "^2.0.4",
     "url-parse": "^1.4.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "grunt": "^1.0.4",
+    "grunt-babel": "^8.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "load-grunt-tasks": "^5.1.0"
   }
 }

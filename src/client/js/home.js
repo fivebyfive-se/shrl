@@ -1,34 +1,28 @@
-function debounce(func, wait, immediate) {
-    let timeout;
-    return function() {
-        var context = this, args = arguments;
-        var later = function() {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-        };
-        var callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
-    };
-}
-
-function safeGetValue(elm, fallback = '') {
-    if (elm) {
-        return elm.value || fallback;
-    }
-    return fallback;
-}
-function replaceClass(elm, replaceClass, replaceWith = null) {
-    if (elm && elm.classList) {
-        elm.classList.remove(replaceClass);
-        if (replaceWith) {
-            elm.classList.add(replaceWith);
-        }
-    }
-}
-
 (() => {
+    const debounce = (func, wait, immediate) => {
+        let timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+    const safeGetValue = (elm, fallback = '') => elm ? (elm.value || fallback) : fallback;
+    const replaceClass = (elm, replaceClass, replaceWith = null) => {
+        if (elm && elm.classList) {
+            elm.classList.remove(replaceClass);
+            if (replaceWith) {
+                elm.classList.add(replaceWith);
+            }
+        }
+    };
+
     const urlField = document.getElementById('url');
     const keyField = document.getElementById('shortened');
     const formFieldClass = 'form__field',
@@ -55,6 +49,7 @@ function replaceClass(elm, replaceClass, replaceWith = null) {
                 lastUrlValue = currValue;    
             }
         }
+        
         function keyChanged() {
             const field = this;
             const currValue = safeGetValue(field);
