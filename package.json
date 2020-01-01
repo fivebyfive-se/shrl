@@ -9,7 +9,8 @@
   },
   "keywords": [
     "url",
-    "short"
+    "short",
+    "url-shortener"
   ],
   "author": "kalle@kalle.surf",
   "license": "ISC",
