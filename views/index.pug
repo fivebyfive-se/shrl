@@ -1,7 +1,7 @@
 extends ./layout/page.pug
 
 block content
-    form#main-form.form
+    form#main-form.form(disabled)
         div#url-container.form__section
             label(for="url") URL to shorten:
             .form__field-container.form__field-container--with-icon
@@ -12,7 +12,6 @@ block content
                 label(for="result") Shortened URL:
                 span https://shrl.cc/
                 input#key.form__field.form__field--display(type="text", value=suggestion)
-                i.material-icons.form__field__icon.form__field__icon--left vpn_key
         div.form__section
             button#submit-button.form__button.form__button--fill(type="submit")
                 span Create shortened link
