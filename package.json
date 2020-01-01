@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "build": "grunt build",
-    "postinstall": "grunt build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -13,7 +12,7 @@
     "short",
     "url-shortener"
   ],
-  "author": "kalle@kalle.surf",
+  "author": "Kalle Räisänen <kalle@kalle.surf>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
