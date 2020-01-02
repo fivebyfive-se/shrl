@@ -1,21 +1,27 @@
 extends ./layout/page.pug
-
 block content
     form#main-form.form(disabled)
         div#url-container.form__section
-            label(for="url") URL to shorten:
+            label.form__label(for='url') URL to shorten:
+                span.form__label__sub-label http or https
             .form__field-container.form__field-container--with-icon
-                input#url.form__field.form__field--fill(type="text", placeholder="URL to shorten...")
+                input#url.form__field.form__field--fill(type='text', placeholder='https://example.com')
                 i.material-icons.form__field__icon.form__field__icon--left link
+                i.form__field__icon.form__field__icon--validation(data-validation-for='url')
+            .form__field__validation-message(data-message-for='url') URL doesn't look right
         div#shortened.form__section
-            .form__field-container.form__field-container--with-icon
-                label(for="result") Shortened URL:
-                span https://shrl.cc/
-                input#key.form__field.form__field--display(type="text", value=suggestion)
+            .form__field-container
+                label.form__label(for='key') Shortened URL:
+                    span.form__label__sub-label (min 3 characters, only alphanumeric characters)
+                .form__field-container.form__field-container--with-prefix
+                    span https://shrl.cc/
+                    input#key.form__field.form__field--display(type='text', value=suggestion)
+                    i.form__field__icon.form__field__icon--validation(data-validation-for='key')
+            .form__field__validation-message(data-message-for='key') The chosen short-code is already in use
         div.form__section
-            button#submit-button.form__button.form__button--fill(type="submit")
+            button#submit-button.form__button.form__button--fill(type='submit')
                 span Create shortened link
     div#result
 
 block scripts
-    script(src="/js/home.js")
+    script(src='/js/home.js')

@@ -3,13 +3,23 @@ $color-white: #fff;
 
 $color-body: #00838F;
 $color-link: #FFAB91;
+$color-dark-link: #FF5722;
 $color-grey: #ECEFF1;
+$color-dark-grey: #CFD8DC;
 
 $color-action: #006064;
 $color-disabled: #78909C;
 
 $color-green: #00E676;
 $color-red: #FF1744;
+
+$space-small: .25rem;
+$space-medium: .5rem;
+$space-large: .75rem;
+$space-x-large: 1rem;
+$space-xx-large: 1.5rem;
+
+$border-radius: 4px;
 
 html {
     font-size: 20px;
@@ -27,7 +37,7 @@ body {
     padding: 0;
     font-family: 'Lexend Deca', Helvetica, sans-serif;
     font-size: 1rem;
-    line-height: 1;
+    -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -51,18 +61,18 @@ header, main, footer {
     > section {
         width: 900px;
         max-width: 99%;
+
         margin: 0 auto;
-        padding: 1rem 1.5rem;
+        padding: $space-xx-large;
+
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 }
 main > section {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-
     background-color: $color-grey;
+    border-radius: $border-radius;
     color: $color-black;
 }
 
@@ -73,27 +83,45 @@ main > section {
 
     #{$self}__section {
         display: block;
-        margin: .5rem;
+        margin: $space-medium;
+        &:nth-child(even) {
+            background-color: $color-dark-grey;
+            padding: $space-medium;
+        }
     }
 
     #{$self}__field-container {
         position: relative;
         &--with-icon {
             #{$self}__field:not(#{$self}__field--display) {
-                padding-left: 1.75rem;
+                padding-left: $space-xx-large + $space-small;
+            }
+        }
+        &--with-prefix {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            #{$self}__field {
+                flex-grow: 1;
             }
         }
     }
 
     #{$self}__field,
     #{$self}__button {
-        padding: .5rem 1rem;
+        padding: $space-medium $space-x-large;
         border: 1px solid transparent;
-        border-radius: .2rem;
+        border-radius: $border-radius;
     
         &--fill {
             width: 100%;
         }
+    }
+    #{self}__field,
+    #{self}__button,
+    #{self}__field__icon,
+    #{$self}__field__validation-message {
+        transition: all .4s ease-in-out;
     }
 
     #{$self}__field {
@@ -103,28 +131,30 @@ main > section {
     
         &:focus {
             outline: none;
+            box-shadow: 0 0 $space-large rgba($color-body, .4);
+
             &:not(#{$self}__field--error) {
                 border-color: $color-body;
-                box-shadow: 0 5px 5px rgba($color-body, .2);
             }
         }
 
         &--display {
-            padding: .25rem;
+            padding: $space-small;
             
             &:not(:focus):not(#{$self}__field--error) {
                 cursor: pointer;
                 background: transparent;
-                color: $color-link;
+                color: $color-dark-link;
                 border-color: transparent;
+                width: auto;
+                & + #{$self}__field__icon--validation {
+                    opacity: 0;
+                }
             }
         }
 
         &--error {
             border-color: $color-red;
-            &:focus {
-                box-shadow: 0 5px 5px rgba($color-red, .2);
-            }
         }
         &--success {
             border-color: $color-green;
@@ -132,12 +162,31 @@ main > section {
     }
 
     #{$self}__field__icon {
+        display: inline-block;
         position: absolute;
         top: 50%;
-        left: .5rem;
-        font-size: 1rem;
+        left: $space-medium;
+
+        font-family: 'Material Icons';
+        font-size: 1rem;        
+        font-weight: normal;
+        font-style: normal;
         line-height: 0;
+        letter-spacing: normal;
+        text-transform: none;
+
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+
         transform: translateY(50%);
+
+        &--validation {
+            opacity: 0;
+            left: auto;
+            right: $space-medium;
+        }
     }
     
     #{$self}__button {
@@ -145,30 +194,58 @@ main > section {
         align-items: center;
         justify-content: center;
 
-        padding-top: .75rem;
-        padding-bottom: .75rem;
+        padding-top: $space-large;
+        padding-bottom: $space-large;
 
         background-color: $color-action;
         color: $color-white;
+
+        cursor: pointer;
     
         &, &__icon {
             line-height: 1.5;
         }
+
+        &:hover {
+            box-shadow: 0 0 $space-large rgba($color-body, .2);
+        }
     }
     #{$self}__button__icon {
         display: inline-block;
-        margin-right: .25rem;
+        margin-right: $space-small;
         font-size: 1em;
+    }
+
+    #{$self}__label {
+        display: flex;
+        margin-bottom: $space-small;
+        font-size: .75rem;
+        justify-content: space-between;
+
+        &__sub-label {
+            font-size: .6rem;
+        }
     }
 
     &[disabled] #{$self}__button {
         background-color: $color-disabled;
     }
-}
-label {
-    display: block;
-    margin-bottom: .2rem;
-    font-size: .7rem;
+
+    #{$self}__field__validation-message {
+        opacity: 0;
+        margin-top: $space-small;
+        font-size: .75rem;
+        text-align: right;
+    }
+    .show {
+        opacity: 1;
+    }
+    .error {
+        color: $color-red;
+    }
+    .success {
+        color: $color-green;
+    }
 }
 
 #shortened, #result {
@@ -176,7 +253,7 @@ label {
 }
 
 .preamble {
-    margin-right: .5rem;
+    margin-right: $space-medium;
 }
 
 .url {

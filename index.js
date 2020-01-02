@@ -10,6 +10,8 @@ const APP_NAME = process.env.APP_NAME || 'shrl';
 
 const defaultVars = { title: APP_NAME };
 
+const keyCharacters = 'abcdefghijklmnopqrstuvwxyz0123456789-_';
+
 express()
     .use(bodyParser.json({type: '*/json'}))
     .use(express.static(path.join(__dirname, 'public')))
@@ -25,7 +27,7 @@ express()
     .set('view engine', 'pug')
 
     .get('/', (req, res) => {
-        const suggestion = randomString({length: 6, type: 'url-safe'});
+        const suggestion = randomString({length: 5, characters: keyCharacters});
         res.render('index', { ...defaultVars, suggestion });
     })
 

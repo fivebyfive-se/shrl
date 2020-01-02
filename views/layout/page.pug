@@ -1,6 +1,11 @@
 doctype html
-html
+html(lang='en')
     head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='theme-color', content='#00838F')
+
         if subtitle
             title #{title}: #{subtitle}
         else
@@ -17,14 +22,14 @@ html
         footer
             section
                 p Copyright &copy; 2020
-                    a(href="//kalle.surf", target="_blank")  Kalle R&auml;is&auml;nen.
+                    a(href='//kalle.surf', target='_blank')  Kalle R&auml;is&auml;nen.
 
-        link(rel="stylesheet", href="/css/style.css")
+        link(rel='stylesheet', href='/css/style.css')
 
         // Start CDN
-        script(src="//unpkg.com/unfetch/polyfill")
-        link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Lexend+Deca|Staatliches&display=swap")
-        link(rel="stylesheet", href="//fonts.googleapis.com/icon?family=Material+Icons")
+        script(src='//unpkg.com/unfetch/polyfill')
+        link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Lexend+Deca|Staatliches&display=swap')
+        link(rel='stylesheet', href='//fonts.googleapis.com/icon?family=Material+Icons')
         // end CDN
 
         block scripts
