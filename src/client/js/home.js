@@ -128,7 +128,7 @@
             .then((resp) => resp.json())
             .then((resp) => {
                 if (resp.success) {
-                    resultContainer.innerHTML = `<p>Created new short link <a href="/${key}">/${key}</a></p>`;
+                    resultContainer.innerHTML = `<p>Created new short link <a href="/${key}">shrl.cc/<b>${key}</b></a></p>`;
                     resultContainer.style.display = 'block';
                     form.style.display = 'none';
                 } else {
