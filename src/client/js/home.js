@@ -120,8 +120,8 @@
             form.setAttribute('disabled', 'disabled');
 
             fetch(`/url/${key}`, {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                method: 'POST',
+                cache: 'no-cache',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url })
             })
