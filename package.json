@@ -1,6 +1,6 @@
 {
   "name": "shrrl",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "URL shortener",
   "main": "index.js",
   "scripts": {
