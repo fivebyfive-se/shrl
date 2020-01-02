@@ -9,7 +9,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'public/js/home.js': 'src/client/js/home.js'
+          'public/js/home.js': 'src/client/js/home.js',
+          'public/js/redirect.js': 'src/client/js/redirect.js'
         }
       }
     },
