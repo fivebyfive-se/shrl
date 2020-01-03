@@ -1,5 +1,10 @@
 const passport = require('passport');
 const express = require('express');
+
+var util = require('util');
+var url = require('url');
+var querystring = require('querystring');
+
 const router = express.Router();
 
 console.log(__filename);
@@ -27,23 +32,24 @@ router
                 const returnTo = req.session.returnTo;
                 delete req.session.returnTo;
 
-                res.redirect(returnTo || '/user');
+                res.redirect(returnTo || '/');
             });
         })(req, res, next);
     })
 
     .get('/logout', (req, res) => {
         req.logout();
+        let returnTo = req.protocol + '://' + req.hostname;
 
-        var returnTo = req.protocol + '://' + req.hostname;
-        var port = req.connection.localPort;
+        const port = req.connection.localPort;
         if (port !== undefined && port !== 80 && port !== 443) {
           returnTo += ':' + port;
         }
-        var logoutURL = new url.URL(
+
+        const logoutURL = new url.URL(
           util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
         );
-        var searchString = querystring.stringify({
+        const searchString = querystring.stringify({
           client_id: process.env.AUTH0_CLIENT_ID,
           returnTo: returnTo
         });

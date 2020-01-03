@@ -23,6 +23,14 @@ html(lang='en')
             section
                 p Copyright &copy; 2020
                     a(href='//kalle.surf', target='_blank')  Kalle R&auml;is&auml;nen.
+                div
+                    if locals.user
+                        p Logged in as
+                            a(href='/user')= locals.user.displayName
+                        p
+                            a(href='/auth/logout') Log out
+                    else
+                        a(href='/auth/login') Log in
 
         link(rel='stylesheet', href='/css/style.css')
 
