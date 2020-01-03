@@ -9,15 +9,15 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'public/js/home.js': 'src/client/js/home.js',
-          'public/js/redirect.js': 'src/client/js/redirect.js'
+          'public/js/home.js': 'src/js/home.js',
+          'public/js/redirect.js': 'src/js/redirect.js'
         }
       }
     },
     sass: {
       dist: {
         files: {
-          'public/css/style.css': 'src/client/scss/style.scss'
+          'public/css/style.css': 'src/scss/style.scss'
         }
       }
     }
