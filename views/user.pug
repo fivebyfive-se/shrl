@@ -1,9 +1,27 @@
 extends ./layout/page.pug
+
 block content
-    h2= userProfile.displayName
-        span= userProfile.nickname
-    p
+    h2
         img(src=userProfile.picture, alt='Profile image')
-    p
-        a(href='/') Back to SHRL.cc
+        = userProfile.displayName
+
+    hr
+
+    h3 My links
+        div.link-list
+            div.link-list__row
+                div.link-list__key
+                    a(href='/key') key
+                div.link-list__url
+                    a(href='/') https://url/
+                div.link-list__action
+                    a.btn.btn--warning.btn--small(href='#',data-delete-url='key')
+                        i.icon warning
+                        | Delete
+
+    hr
+
+    div
+        p
+            a(href='/') Back to SHRL.cc
 

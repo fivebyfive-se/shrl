@@ -1,13 +1,10 @@
 const passport = require('passport');
 const express = require('express');
-
-var util = require('util');
-var url = require('url');
-var querystring = require('querystring');
+const util = require('util');
+const url = require('url');
+const querystring = require('querystring');
 
 const router = express.Router();
-
-console.log(__filename);
 
 router
     .get('/login',

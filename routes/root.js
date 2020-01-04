@@ -1,22 +1,30 @@
 const express = require('express');
+
 const redis = require('../lib/rediswrapper');
-const keyutil = require('../lib/key');
+const keyutil = require('../lib/util/key');
+
 const validateKey = require('../lib/middleware/validate-key');
+const renderViewData = require('../lib/middleware/render-view-data');
+
 const router = express.Router();
 
-const APP_NAME = process.env.APP_NAME || 'shrl';
-const defaultVars = { title: APP_NAME };
-
-console.log(__filename);
-
 router
+    .use(renderViewData)
+
     .get('/', (req, res) => {
         const suggestion = keyutil.generate(process.env.KEY_DEFAULT_LENGTH || 5);
-        res.render('index', { ...defaultVars, suggestion });
+        res.renderView('index', { suggestion });
     })
 
-    .get('/:key', validateKey, async (req, res) => {
+    .get('404/:key?', (req, res) => {
+        const key = req.params.key || null;
+        res.renderView('notfound', { key, invalidKey: key && !keyutil.valid(key) })
+    })
+
+    .get('/:key', validateKey({errorStatus: 404, redirectTo: '/404'}), async (req, res) => {
         const url = await redis.get(req.params.key);
+        const viewData = [];
+
         if (url) {
             const parsedUrl = parse(url);
             const { href, hostname } = { ...parsedUrl };
@@ -28,21 +36,19 @@ router
                         : prev;
                 }, parsedUrl.toString());
 
-            res.render('redirect', {
-                ...defaultVars,
-                success: true,
+            viewData.push({
                 href,
                 hostname,
                 displayUrl,
                 subtitle: `Redirecting to ${hostname}`
             });
         } else {
-            res.render('redirect', {
-                ...defaultVars,
+            viewData.push({
                 success: false,
                 error: `${req.params.key} not found!`
             })
         }
+        res.renderView('redirect', ...viewData);
     })
 
 module.exports = router;

@@ -1,27 +1,48 @@
 extends ./layout/page.pug
+
+mixin formsection(id)
+    div(id=id + '-container', class=itemClass('form', 'section'), data-form-section=id)&attributes(attributes)
+        block
+
+mixin formlabel(target, label, sublabel=null)
+    label(class=itemClass('form', 'label'), for=target)= label
+        if sublabel
+            span(class=itemClass('form', 'label', 'sub-label'))= sublabel
+
+mixin formfieldcontainer(...variants)
+    div(class=itemWithVariants('form', 'field-container', ...variants))
+        block
+
+mixin formfield(id, icon=null, type='text', ...variants)
+    input(id=id, class=itemWithVariants('form', 'field', ...variants))&attributes(attributes)
+    if icon
+        i.material-icons(class=itemWithVariants('form', 'field__icon', 'left'))= icon
+    i(class=itemWithVariants('form', 'field__icon', 'validation'), data-validation-for=id)
+
+mixin formfieldvalidationmessage(id, message)
+    div(class=itemClass('form', 'field', 'validation-message'), data-message-for=id)= message
+
 block content
     form#main-form.form(disabled)
-        div#url-container.form__section
-            label.form__label(for='url') URL to shorten:
-                span.form__label__sub-label http or https
-            .form__field-container.form__field-container--with-icon
-                input#url.form__field.form__field--fill(type='text', placeholder='https://example.com')
-                i.material-icons.form__field__icon.form__field__icon--left link
-                i.form__field__icon.form__field__icon--validation(data-validation-for='url')
-            .form__field__validation-message(data-message-for='url') URL doesn't look right
-        div#shortened.form__section
-            .form__field-container
-                label.form__label(for='key') Shortened URL:
-                    span.form__label__sub-label (min 3 characters, only alphanumeric characters)
-                .form__field-container.form__field-container--with-prefix
-                    span https://shrl.cc/
-                    input#key.form__field.form__field--display(type='text', value=suggestion)
-                    i.form__field__icon.form__field__icon--validation(data-validation-for='key')
-            .form__field__validation-message(data-message-for='key') The chosen short-code is already in use
-        div.form__section
-            button#submit-button.form__button.form__button--fill(type='submit')
+        +formsection('url')
+            +formlabel('url', 'URL to shorten', 'http or https')
+            +formfieldcontainer('with-icon')
+                +formfield('url', 'link', 'text', 'fill')(placeholder='https://example.com')
+            +formfieldvalidationmessage('url', "URL doesn't look right")
+
+        +formsection('key')(style='display: none')
+            +formlabel('key', 'Shortened URL', 'min 3 characters, only alphanumeric characters')
+            +formfieldcontainer('with-prefix')
+                span https://shrl.cc/
+                +formfield('key', null, 'text', 'display')(value = suggestion)
+            +formfieldvalidationmessage('key', "The chosen short-code is already in use")
+
+        +formsection('button')
+            button#submit-button(class=itemWithVariants('form', 'button', 'fill'), type='submit')
                 span Create shortened link
+
     div#result
 
 block scripts
+    script(src='//cdn.jsdelivr.net/npm/regenerator-runtime@0.13.3/runtime.min.js')
     script(src='/js/home.js')

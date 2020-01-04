@@ -42,7 +42,7 @@ body {
 
 h1,
 h2 {
-    font-family: 'Staatliches', cursive;
+    font-family: 'Staatliches', Helvetica, Arial, sans-serif;
     margin: 0;
 }
 h1 {
@@ -55,6 +55,10 @@ a {
     color: $color-link;
     font-weight: bold;
     text-decoration: none;
+}
+hr {
+    margin: $space-x-large 0 $space-xx-large;
+    border: 1px solid $color-white;
 }
 
 header, main, footer {
@@ -75,6 +79,68 @@ main > section {
     border-radius: $border-radius;
     color: $color-black;
 }
+
+.icon {
+    display: inline-block;
+
+
+    font-family: 'Material Icons';
+    font-size: 1.1em;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+
+    color: inherit;
+}
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    padding: .5em 1em;
+
+    background-color: $color-action;
+    border: none;
+    border-radius: 5px;
+    color: $color-white;
+
+    font-family: 'Lexend Deca', Helvetica, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+
+    transition: all .2s;
+
+    .icon {
+        margin-right: .2em;
+    }
+
+    &:hover,
+    &:focus {
+        box-shadow: 0 0 5px rgba($color-black, .4);
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        background-color: $color-disabled;
+    }
+    &--small {
+        font-size: .9em;
+        padding: .4em .75em;
+    }
+
+    &--warning { background-color: $color-dark-link; }
+    &--success { background-color: $color-green; }
+    &--error { background-color: $color-red; }
+}   
+ 
 
 .form {
     $self: &;
@@ -133,7 +199,7 @@ main > section {
             outline: none;
             box-shadow: 0 0 $space-large rgba($color-body, .4);
 
-            &:not(#{$self}__field--error) {
+            &:not(.invalid) {
                 border-color: $color-body;
             }
         }
@@ -141,7 +207,7 @@ main > section {
         &--display {
             padding: $space-small;
             
-            &:not(:focus):not(#{$self}__field--error) {
+            &:not(:focus):not(.invalid) {
                 cursor: pointer;
                 background: transparent;
                 color: $color-dark-link;
@@ -152,34 +218,16 @@ main > section {
                 }
             }
         }
-
-        &--error {
-            border-color: $color-red;
-        }
-        &--success {
-            border-color: $color-green;
-        }        
     }
 
     #{$self}__field__icon {
-        display: inline-block;
+        @extend .icon;
+
         position: absolute;
         top: 50%;
         left: $space-medium;
 
-        font-family: 'Material Icons';
-        font-size: 1rem;        
-        font-weight: normal;
-        font-style: normal;
         line-height: 0;
-        letter-spacing: normal;
-        text-transform: none;
-
-        white-space: nowrap;
-        word-wrap: normal;
-        direction: ltr;
-        -webkit-font-feature-settings: 'liga';
-
         transform: translateY(50%);
 
         &--validation {
@@ -237,14 +285,27 @@ main > section {
         font-size: .75rem;
         text-align: right;
     }
-    .show {
-        opacity: 1;
-    }
-    .error {
-        color: $color-red;
-    }
-    .success {
-        color: $color-green;
+
+    #{$self}__section {
+        &.valid {
+            #{$self}__field, #{$self}__field:focus {
+                border-color: $color-green;
+            }
+            #{$self}__field__icon {
+                color: $color-green;
+            }
+        }
+        &.invalid {
+            #{$self}__field, #{$self}__field:focus {
+                border-color: $color-red;
+            }
+            #{$self}__field, #{$self}__field__icon {
+                color: $color-red;
+            }
+            #{$self}__field__validation-message {
+                opacity: 1;
+            }
+        }
     }
 }
 
@@ -269,5 +330,15 @@ main > section {
     }
     &__part--hostname {
         font-weight: bold;
+    }
+}
+
+.link-list {
+    $self: &;
+
+    #{$self}__row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 }

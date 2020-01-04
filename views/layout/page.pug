@@ -1,3 +1,34 @@
+-
+    const itemClass = (baseClass, ...itemClasses) => [baseClass, ...itemClasses].filter((c) => !!c).join('__');
+    const baseWithVariants = (base, ...variants) => {
+        return [
+            base, 
+            ...variants
+                .filter((v) => !!v)
+                .map((v) => `${base}--${v}`)
+        ];
+    };
+    const itemWithVariants = (base, item, ...variants) => 
+        baseWithVariants(itemClass(base, item), ...variants);
+
+    const navClass = 'nav';
+    const navItemClass = itemClass(navClass, 'item');
+
+
+mixin navlink(href, title, ...variants)
+    -
+        let classes = baseWithVariants(navItemClass, ...variants, url === href ? 'active' : null);
+    a(href=href, class=classes)= title
+
+mixin navigation
+    nav(class=navClass)
+        +navlink('/', 'Home')
+        if locals.user
+            +navlink('/user', locals.user.nickname)
+            +navlink('/auth/logout', 'Log out', 'warning', 'last')
+        else
+            +navlink('/auth/login', 'Log in', 'last')
+
 doctype html
 html(lang='en')
     head
@@ -13,24 +44,18 @@ html(lang='en')
         block head
     body
         header
-            section
+            section.d-flex
                 h1 #{title}
+                +navigation
         main
             section
                 block content
 
         footer
-            section
+            section.d-flex
                 p Copyright &copy; 2020
                     a(href='//kalle.surf', target='_blank')  Kalle R&auml;is&auml;nen.
-                div
-                    if locals.user
-                        p Logged in as
-                            a(href='/user')= locals.user.displayName
-                        p
-                            a(href='/auth/logout') Log out
-                    else
-                        a(href='/auth/login') Log in
+                +navigation
 
         link(rel='stylesheet', href='/css/style.css')
 

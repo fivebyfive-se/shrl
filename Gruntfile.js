@@ -4,8 +4,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
     babel: {
       options: {
-        sourceMap: true,
-        presets: ['@babel/preset-env']
+        sourceMap: false,
+        presets: ['@babel/preset-env'],
+        plugins: [
+          '@babel/plugin-transform-regenerator', 
+          '@babel/plugin-transform-async-to-generator'
+        ]
       },
       dist: {
         files: {
