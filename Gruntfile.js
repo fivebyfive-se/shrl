@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'public/js/home.js': 'src/js/home.js',
-          // 'public/js/redirect.js': 'src/js/redirect.js'
+          'public/js/accordion.js': 'src/js/accordion.js'
         }
       }
     },

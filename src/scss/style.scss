@@ -144,6 +144,14 @@ main {
     }
 }
 
+header h1 {
+    img {
+        height: 120px;
+        width:  140px;
+        margin: -50px 0 -40px;
+    }
+}
+
 .d-flex {
     display: flex;
     flex-direction: row;

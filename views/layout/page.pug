@@ -46,7 +46,8 @@ html(lang='en')
         header= url
             section.d-flex
                 h1
-                    a(href='/') #{title}
+                    a(href='/')
+                        img(src='/img/logo-white.svg', alt=title)
                 if !hideNavigation
                     +navigation
         main(class=locals.user ? 'two-column' : '')
@@ -74,20 +75,7 @@ html(lang='en')
                                             a.btn.btn--warning.btn--small(href='#',data-delete-url=key)
                                                 i.icon warning
                                                 | Delete
-                            script.
-                                (function () {
-                                    const accordions = document.querySelectorAll('.accordion__item');
-                                    if (accordions) {
-                                        accordions.forEach((a) => {
-                                            const headers = a.querySelectorAll('.accordion__header');
-                                            (headers || []).forEach((h) => {
-                                                h.addEventListener('click', (ev) => {
-                                                    a.classList.toggle('accordion__item--active');
-                                                });
-                                            });
-                                        });
-                                    }
-                                })();
+                            script(src='/js/accordion.js')
                         else
                             p No links created yet.
 
