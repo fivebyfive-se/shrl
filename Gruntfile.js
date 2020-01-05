@@ -21,8 +21,7 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: {
-          'public/css/layout.css': 'src/scss/layout.scss',
-          
+          'public/css/layout.css': 'src/scss/layout.scss',      
           'public/css/index.css': 'src/scss/index.scss',
           'public/css/accordion.css': 'src/scss/accordion.scss',
           'public/css/redirect.css': 'src/scss/redirect.scss',

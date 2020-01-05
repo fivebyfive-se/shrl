@@ -3,11 +3,13 @@
 html {
     font-size: 20px;
 }
+
 body {
     background-color: $color-body;
     color: $color-white;
     line-height: 1.2;
 }
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -16,6 +18,7 @@ body {
     font-size: 1rem;
     -webkit-font-smoothing: antialiased;
 }
+
 a {
     color: $color-link;
     font-weight: bold;
@@ -26,28 +29,35 @@ h1,
 h2 {
     font-family: 'Staatliches', Helvetica, Arial, sans-serif;
     margin: 0;
-    & > a {
+
+    &>a {
         font: inherit;
         color: inherit;
     }
 }
+
 h1 {
     font-size: 4rem;
 }
+
 h2 {
     font-size: 2rem;
 }
+
 hr {
     margin: $space-x-large 0 $space-xx-large;
     border: 1px solid $color-white;
 }
 
-header, main, footer {
+header,
+main,
+footer {
     width: 1020px;
     max-width: 99%;
 
     margin: 0 auto;
-    > section {
+
+    >section {
         padding: $space-xx-large;
 
         display: flex;
@@ -59,13 +69,9 @@ header, main, footer {
 header h1 {
     img {
         height: 120px;
-        width:  140px;
+        width: 140px;
         margin: -50px 0 -40px;
     }
-}
-
-main {
-
 }
 
 .d-flex {
@@ -75,70 +81,77 @@ main {
     align-items: center;
 }
 
-
 main {
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    > section {
+    >section {
         justify-content: flex-start;
         padding-bottom: $space-xx-large + $space-medium;
         background-color: $color-grey;
         border-radius: $border-radius;
         color: $color-black;
     }
+
     &.two-column {
-        > section {
-            &:first-child {
-                border-radius: $border-radius $border-radius 0 0;
-            }
-            &:last-child {
-                position: relative;
-                justify-content: flex-start;
-                background-color: $color-dark-grey;
-                border-radius:  0 0 $border-radius $border-radius;
-
-                h3 {
-                    margin-bottom: $space-large;
-                    a { color: $color-dark-link; }
-                }
-
-                &:before {
-                    content: '';
-                    position: absolute;
-                    top: -10px;
-                    left: 0;
-                    right: 0;
-                    height: 10px;
-                    width: 100%;
-                    box-shadow: 0 10px 10px rgba($color-black, .2);
-                }
-            }    
+        >section {
+            border-radius: $border-radius $border-radius 0 0;
         }
+
+        >aside {
+            position: relative;
+            justify-content: flex-start;
+            padding: $space-xx-large;
+
+            background-color: $color-dark-grey;
+            border-radius: 0 0 $border-radius $border-radius;
+
+            color: $color-black;
+
+            h3 {
+                margin-bottom: $space-large;
+
+                a {
+                    color: $color-dark-link;
+                }
+            }
+
+            &:before {
+                content: '';
+                position: absolute;
+                top: -10px;
+                left: 0;
+                right: 0;
+                height: 10px;
+                width: 100%;
+                box-shadow: 0 10px 10px rgba($color-black, .2);
+            }
+        }
+
         @media screen and (min-width: 1000px) {
             flex-direction: row;
-            > section {
-                &:first-child {
-                    border-radius: $border-radius 0 0 $border-radius;
-                    flex-grow: 1;
-                }
-                &:last-child {
-                    border-radius: 0 $border-radius $border-radius 0;
-                    flex-grow: 0;
-                    width: 300px;
 
-                    &:before {
-                        top: 0;
-                        left: -10px;
-                        right: auto;
-                        bottom: 0;
-                        height: 100%;
-                        width: 10px;
-                        box-shadow: 10px 0 10px rgba($color-black, .2);
-                    }
-    
+            >section {
+                border-radius: $border-radius 0 0 $border-radius;
+                flex-grow: 1;
+            }
+
+            >aside {
+                border-radius: 0 $border-radius $border-radius 0;
+                flex-grow: 0;
+                width: 300px;
+
+                &:before {
+                    top: 0;
+                    left: -10px;
+                    right: auto;
+                    bottom: 0;
+                    height: 100%;
+                    width: 10px;
+                    box-shadow: 10px 0 10px rgba($color-black, .2);
                 }
+
             }
         }
     }
@@ -174,7 +187,8 @@ main {
 
         color: $color-white;
 
-        &, &:after {
+        &,
+        &:after {
             transition: all .3s;
         }
 
@@ -189,7 +203,9 @@ main {
             background-color: $color-white;
             transform: translateX(-50%);
         }
-        &--active, &:hover {
+
+        &--active,
+        &:hover {
             &:after {
                 width: 90%;
             }
@@ -198,6 +214,7 @@ main {
         &:hover {
             color: $color-link;
             transform: translateY(-1px);
+
             &:after {
                 background-color: $color-link;
             }
@@ -252,12 +269,21 @@ footer .nav .nav__item {
     &:disabled {
         background-color: $color-disabled;
     }
+
     &--small {
         font-size: .9em;
         padding: .4em .75em;
     }
 
-    &--warning { background-color: $color-dark-link; }
-    &--success { background-color: $color-green; }
-    &--error { background-color: $color-red; }
-}   
+    &--warning {
+        background-color: $color-dark-link;
+    }
+
+    &--success {
+        background-color: $color-green;
+    }
+
+    &--error {
+        background-color: $color-red;
+    }
+}
