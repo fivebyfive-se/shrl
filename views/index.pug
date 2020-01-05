@@ -1,4 +1,4 @@
-extends ./layout/page.pug
+extends _layout.pug
 
 mixin formsection(id)
     div(id=id + '-container', class=itemClass('form', 'section'), data-form-section=id)&attributes(attributes)
@@ -42,6 +42,10 @@ block content
                 span Create shortened link
 
     div#result
+
+block styles
+    link(rel='stylesheet', href='/css/index.css')
+
 
 block scripts
     script(src='//cdn.jsdelivr.net/npm/regenerator-runtime@0.13.3/runtime.min.js')

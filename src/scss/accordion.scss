@@ -1,0 +1,85 @@
+@import './common';
+
+.accordion {
+    $self: &;
+    width: 100%;
+    &__item {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: stretch;
+        align-items: stretch;
+
+        width: 100%;
+        padding: .25rem 0;
+
+        + #{$self}__item {
+            border-top: 1px solid $color-grey;
+        }
+    }
+
+    &__header, &__body, &__footer {
+        flex-basis: 100%;
+    }
+
+    &__header,
+    &__body,
+    &__footer {
+        padding: .25rem 0;
+    }
+
+    &__header {
+        cursor: pointer;
+        display: flex;
+        &:before {
+            @extend %icon;
+            content: 'arrow_drop_down';
+        }
+    }
+
+    &__footer {
+        justify-content: space-between;
+        .btn {
+            font-size: .75rem;
+            & + .btn {
+                margin-left: .25em;
+            }
+        }
+    }
+
+    &__body,
+    &__footer {
+        display: none;
+    }
+
+    &__item--active {
+        #{$self}__header:before {
+            content: 'arrow_drop_up';
+        }
+
+        #{$self}__body,
+        #{$self}__footer {
+            animation: fadeIn .3s;
+            display: flex;
+        }
+    }
+
+    @media screen and (max-width: 999px) {
+        &__body,
+        &__footer {
+            flex-basis: 50%;
+        }
+        &__footer {
+            justify-content: flex-end;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

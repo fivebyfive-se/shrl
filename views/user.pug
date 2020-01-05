@@ -1,4 +1,4 @@
-extends ./layout/page.pug
+extends _layout.pug
 
 block content
     h2
@@ -29,3 +29,5 @@ block content
         p
             a(href='/') Back to SHRL.cc
 
+block styles
+    link(rel='stylesheet', href='/css/user.css')

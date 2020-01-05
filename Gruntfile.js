@@ -21,7 +21,12 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: {
-          'public/css/style.css': 'src/scss/style.scss'
+          'public/css/layout.css': 'src/scss/layout.scss',
+          
+          'public/css/index.css': 'src/scss/index.scss',
+          'public/css/accordion.css': 'src/scss/accordion.scss',
+          'public/css/redirect.css': 'src/scss/redirect.scss',
+          'public/css/user.css': 'src/scss/user.scss',
         }
       }
     }

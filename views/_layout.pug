@@ -14,7 +14,6 @@
     const navClass = 'nav';
     const navItemClass = itemClass(navClass, 'item');
 
-
 mixin navlink(id, href, icon, title, ...variants)
     -
         let classes = baseWithVariants(navItemClass, ...variants, id && view === id ? 'active' : null);
@@ -37,6 +36,10 @@ html(lang='en')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         meta(name='theme-color', content='#00838F')
 
+        link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Lexend+Deca|Staatliches&display=swap')
+        link(rel='stylesheet', href='//fonts.googleapis.com/icon?family=Material+Icons')
+        link(rel='stylesheet', href='/css/layout.css')
+
         if subtitle
             title #{title}: #{subtitle}
         else
@@ -54,31 +57,13 @@ html(lang='en')
             section
                 block content
             if locals.user
-                section.sidebar
+                aside
                     h3 
                         a(href='/user')
                             i.icon account_circle
                             = locals.user.displayName
                     h4 Recent links
-                        if app_data && app_data.urls
-                            .accordion
-                                each url, key in app_data.urls
-                                    .accordion__item
-                                        .accordion__header
-                                            h4= key
-                                        .accordion__body
-                                            = url
-                                        .accordion__footer
-                                            a.btn.btn--small(href='/' + key)
-                                                i.icon link
-                                                | Go to URL
-                                            a.btn.btn--warning.btn--small(href='#',data-delete-url=key)
-                                                i.icon warning
-                                                | Delete
-                            script(src='/js/accordion.js')
-                        else
-                            p No links created yet.
-
+                        include _accordion.pug
 
         footer
             section.d-flex
@@ -88,12 +73,8 @@ html(lang='en')
                 if !hideNavigation
                     +navigation
 
-        link(rel='stylesheet', href='/css/style.css')
-
-        // Start CDN
         script(src='//unpkg.com/unfetch/polyfill')
-        link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Lexend+Deca|Staatliches&display=swap')
-        link(rel='stylesheet', href='//fonts.googleapis.com/icon?family=Material+Icons')
-        // end CDN
+
+        block styles
 
         block scripts

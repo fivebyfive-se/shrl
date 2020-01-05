@@ -1,0 +1,39 @@
+$color-black: #000;
+$color-white: #fff;
+
+$color-body: #00838F;
+$color-link: #FFAB91;
+$color-dark-link: #FF5722;
+$color-grey: #ECEFF1;
+$color-dark-grey: #CFD8DC;
+
+$color-action: #006064;
+$color-disabled: #78909C;
+
+$color-green: #00E676;
+$color-red: #FF1744;
+
+$space-small: .25rem;
+$space-medium: .5rem;
+$space-large: .75rem;
+$space-x-large: 1rem;
+$space-xx-large: 1.5rem;
+
+$border-radius: 4px;
+
+%icon {
+    display: inline-block;
+
+    font-family: 'Material Icons';
+    font-size: 1.1em;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    color: inherit;
+}

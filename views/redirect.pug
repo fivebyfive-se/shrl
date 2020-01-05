@@ -1,4 +1,4 @@
-extends ./layout/page.pug
+extends _layout.pug
 
 block head
     if success
@@ -11,3 +11,6 @@ block content
             a.url(href=href) !{displayUrl}.
         else
             span.error #{title}
+
+block styles
+    link(rel='stylesheet', href='/css/redirect.css')

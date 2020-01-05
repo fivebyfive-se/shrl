@@ -1,0 +1,21 @@
+@import './common';
+
+.preamble {
+    margin-right: $space-medium;
+}
+
+.count-down {
+    display: inline-block;
+    margin-left: .5rem;
+}
+
+.url {
+    font-weight: normal;
+
+    &__part--auth {
+        display: none;
+    }
+    &__part--hostname {
+        font-weight: bold;
+    }
+}

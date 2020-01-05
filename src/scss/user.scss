@@ -1,0 +1,74 @@
+@import './common';
+
+.link-list {
+    $self: &;
+    margin: $space-large 0;
+
+    &__row {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: $space-medium;
+        margin: $space-small 0;
+
+        &:nth-child(odd) {
+            background-color: $color-dark-grey;
+        }
+        &:before, &:after {
+            content: '';
+            position: absolute;
+            display: block;
+
+            top: 0;
+            bottom: 0;
+            width: 0;
+
+            background-color: $color-action;
+            transition: all .2s;
+        }
+        &:before {
+            left: -2px;
+        }
+        &:after {
+            right: -2px;
+        }
+        &:hover {
+            &:before, &:after {
+                width: 5px;
+            }
+            &:before {
+                left: -10px;
+            }
+            &:after {
+                right: -10px;
+            }
+        }
+    }
+    &__key,
+    &__url {
+        a {
+            color: $color-dark-link;
+            &:hover {
+                color: $color-action;
+            }
+        }
+    }
+
+    &__key,
+    &__action {
+        flex-basis: 15%;
+        min-width: 15%;
+    }
+    &__url {
+        flex-basis: 70%;
+        min-width: 70%;
+    }
+
+    &__action {
+        text-align: right;
+    }
+}
+
