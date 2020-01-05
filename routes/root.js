@@ -1,6 +1,8 @@
 const express = require('express');
 
-const redis = require('../lib/rediswrapper');
+const parse = require('url-parse');
+
+const redis = require('../lib/rediswrapper')('url_');
 const keyutil = require('../lib/util/key');
 
 const validateKey = require('../lib/middleware/validate-key');
@@ -21,9 +23,13 @@ router
         res.renderView('notfound', { key, invalidKey: key && !keyutil.valid(key) })
     })
 
-    .get('/:key', validateKey({errorStatus: 404, redirectTo: '/404'}), async (req, res) => {
-        const url = await redis.get(req.params.key);
-        const viewData = [];
+    .get('/:key', async (req, res) => {
+        let url = null;
+        try {
+            url = await redis.get(req.params.key);
+        } catch {
+            url = null;
+        }
 
         if (url) {
             const parsedUrl = parse(url);
@@ -36,19 +42,20 @@ router
                         : prev;
                 }, parsedUrl.toString());
 
-            viewData.push({
+            res.renderView('redirect', {
+                success: true,
+                hideNavigation: true,
                 href,
                 hostname,
                 displayUrl,
                 subtitle: `Redirecting to ${hostname}`
             });
         } else {
-            viewData.push({
+            res.renderView('redirect', {
                 success: false,
                 error: `${req.params.key} not found!`
-            })
+            });
         }
-        res.renderView('redirect', ...viewData);
     })
 
 module.exports = router;

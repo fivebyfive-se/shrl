@@ -9,11 +9,5 @@ block content
         if success
             span.preamble Redirecting to
             a.url(href=href) !{displayUrl}.
-            span.count-down
-                span#count-down-timer 7
-                span s left
         else
             span.error #{title}
-
-block scripts
-    script(src='/js/redirect.js')

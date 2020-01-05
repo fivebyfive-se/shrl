@@ -64,6 +64,9 @@
         {
             key: 'key',
             validator: async (_, value) => {
+                if (value.length < 5) {
+                    return { found: false, invalid: true };
+                }
                 const resp = await req(`/url/${value}`);
                 if (resp) {
                     const valid = !resp.found && !resp.invalid;
@@ -102,6 +105,7 @@
 
         const validationResult = await field.validator(element, value);
 
+        field.value = value;
         field.valid = !validationResult;
 
         if (field.valid) {
@@ -125,9 +129,9 @@
     form.addEventListener('submit', async (ev) => {
         ev.preventDefault();
 
-        if (keyValid && urlValid) {
-            const key = safeGetValue(keyField);
-            const url = safeGetValue(urlField);
+        if (allValid()) {
+            const key = fields.find((f) => f.key === 'key').value;
+            const url = fields.find((f) => f.key === 'url').value;
 
             form.setAttribute('disabled', 'disabled');
 

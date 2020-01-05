@@ -31,10 +31,10 @@ block content
             +formfieldvalidationmessage('url', "URL doesn't look right")
 
         +formsection('key')(style='display: none')
-            +formlabel('key', 'Shortened URL', 'min 3 characters, only alphanumeric characters')
+            +formlabel('key', 'Shortened URL', 'min 5 characters, only alphanumeric characters')
             +formfieldcontainer('with-prefix')
                 span https://shrl.cc/
-                +formfield('key', null, 'text', 'display')(value = suggestion)
+                +formfield('key', null, 'text', 'display')(value = suggestion, minlength=5, maxlength=255)
             +formfieldvalidationmessage('key', "The chosen short-code is already in use")
 
         +formsection('button')

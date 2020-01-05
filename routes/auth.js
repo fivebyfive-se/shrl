@@ -36,11 +36,8 @@ router
 
     .get('/logout', (req, res) => {
         req.logout();
-        const returnTo = `${req.protocol}://${req.hostname}` +
-            (port && port !== 80 && port !== 443 ? `:${port}` : '');
-        const logoutURL = new url.URL(
-          util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
-        );
+        const returnTo = `${req.protocol}://${req.hostname}`;
+        const logoutURL = new url.URL(util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN));
         logoutURL.search = querystring.stringify({
           client_id: process.env.AUTH0_CLIENT_ID,
           returnTo

@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-  require('load-grunt-tasks')(grunt); // npm install --save-dev load-grunt-tasks
+  require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
     babel: {
@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'public/js/home.js': 'src/js/home.js',
-          'public/js/redirect.js': 'src/js/redirect.js'
+          // 'public/js/redirect.js': 'src/js/redirect.js'
         }
       }
     },

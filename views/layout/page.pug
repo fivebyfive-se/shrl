@@ -15,19 +15,19 @@
     const navItemClass = itemClass(navClass, 'item');
 
 
-mixin navlink(href, title, ...variants)
+mixin navlink(id, href, icon, title, ...variants)
     -
-        let classes = baseWithVariants(navItemClass, ...variants, url === href ? 'active' : null);
-    a(href=href, class=classes)= title
+        let classes = baseWithVariants(navItemClass, ...variants, id && view === id ? 'active' : null);
+    a(href=href, class=classes)&attributes(attributes)
+        i.icon= icon
+        = title
 
 mixin navigation
     nav(class=navClass)
-        +navlink('/', 'Home')
         if locals.user
-            +navlink('/user', locals.user.nickname)
-            +navlink('/auth/logout', 'Log out', 'warning', 'last')
+            +navlink(null, '/auth/logout', 'exit_to_app', 'Log out')
         else
-            +navlink('/auth/login', 'Log in', 'last')
+            +navlink(null, '/auth/login', 'person_outline', 'Log in', 'icon')
 
 doctype html
 html(lang='en')
@@ -43,19 +43,62 @@ html(lang='en')
             title #{title}
         block head
     body
-        header
+        header= url
             section.d-flex
-                h1 #{title}
-                +navigation
-        main
+                h1
+                    a(href='/') #{title}
+                if !hideNavigation
+                    +navigation
+        main(class=locals.user ? 'two-column' : '')
             section
                 block content
+            if locals.user
+                section.sidebar
+                    h3 
+                        a(href='/user')
+                            i.icon account_circle
+                            = locals.user.displayName
+                    h4 Recent links
+                        if app_data && app_data.urls
+                            .accordion
+                                each url, key in app_data.urls
+                                    .accordion__item
+                                        .accordion__header
+                                            h4= key
+                                        .accordion__body
+                                            = url
+                                        .accordion__footer
+                                            a.btn.btn--small(href='/' + key)
+                                                i.icon link
+                                                | Go to URL
+                                            a.btn.btn--warning.btn--small(href='#',data-delete-url=key)
+                                                i.icon warning
+                                                | Delete
+                            script.
+                                (function () {
+                                    const accordions = document.querySelectorAll('.accordion__item');
+                                    if (accordions) {
+                                        accordions.forEach((a) => {
+                                            const headers = a.querySelectorAll('.accordion__header');
+                                            (headers || []).forEach((h) => {
+                                                h.addEventListener('click', (ev) => {
+                                                    a.classList.toggle('accordion__item--active');
+                                                });
+                                            });
+                                        });
+                                    }
+                                })();
+                        else
+                            p No links created yet.
+
 
         footer
             section.d-flex
-                p Copyright &copy; 2020
+                - let year = new Date().getFullYear()
+                p Copyright &copy; #[= year]
                     a(href='//kalle.surf', target='_blank')  Kalle R&auml;is&auml;nen.
-                +navigation
+                if !hideNavigation
+                    +navigation
 
         link(rel='stylesheet', href='/css/style.css')
 

@@ -28,8 +28,6 @@ body {
     background-color: $color-body;
     color: $color-white;
     line-height: 1.2;
-    margin: 0;
-    padding: 0;
 }
 * {
     box-sizing: border-box;
@@ -39,11 +37,20 @@ body {
     font-size: 1rem;
     -webkit-font-smoothing: antialiased;
 }
+a {
+    color: $color-link;
+    font-weight: bold;
+    text-decoration: none;
+}
 
 h1,
 h2 {
     font-family: 'Staatliches', Helvetica, Arial, sans-serif;
     margin: 0;
+    & > a {
+        font: inherit;
+        color: inherit;
+    }
 }
 h1 {
     font-size: 4rem;
@@ -51,22 +58,17 @@ h1 {
 h2 {
     font-size: 2rem;
 }
-a {
-    color: $color-link;
-    font-weight: bold;
-    text-decoration: none;
-}
 hr {
     margin: $space-x-large 0 $space-xx-large;
     border: 1px solid $color-white;
 }
 
 header, main, footer {
-    > section {
-        width: 900px;
-        max-width: 99%;
+    width: 1020px;
+    max-width: 99%;
 
-        margin: 0 auto;
+    margin: 0 auto;
+    > section {
         padding: $space-xx-large;
 
         display: flex;
@@ -74,15 +76,82 @@ header, main, footer {
         justify-content: center;
     }
 }
-main > section {
-    background-color: $color-grey;
-    border-radius: $border-radius;
-    color: $color-black;
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    > section {
+        justify-content: flex-start;
+        padding-bottom: $space-xx-large + $space-medium;
+        background-color: $color-grey;
+        border-radius: $border-radius;
+        color: $color-black;
+    }
+    &.two-column {
+        > section {
+            &:first-child {
+                border-radius: $border-radius $border-radius 0 0;
+            }
+            &:last-child {
+                position: relative;
+                justify-content: flex-start;
+                background-color: $color-dark-grey;
+                border-radius:  0 0 $border-radius $border-radius;
+
+                h3 {
+                    margin-bottom: $space-large;
+                    a { color: $color-dark-link; }
+                }
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    top: -10px;
+                    left: 0;
+                    right: 0;
+                    height: 10px;
+                    width: 100%;
+                    box-shadow: 0 10px 10px rgba($color-black, .2);
+                }
+            }    
+        }
+        @media screen and (min-width: 1000px) {
+            flex-direction: row;
+            > section {
+                &:first-child {
+                    border-radius: $border-radius 0 0 $border-radius;
+                    flex-grow: 1;
+                }
+                &:last-child {
+                    border-radius: 0 $border-radius $border-radius 0;
+                    flex-grow: 0;
+                    width: 300px;
+
+                    &:before {
+                        top: 0;
+                        left: -10px;
+                        right: auto;
+                        bottom: 0;
+                        height: 100%;
+                        width: 10px;
+                        box-shadow: 10px 0 10px rgba($color-black, .2);
+                    }
+    
+                }
+            }
+        }
+    }
 }
 
+.d-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 .icon {
     display: inline-block;
-
 
     font-family: 'Material Icons';
     font-size: 1.1em;
@@ -97,6 +166,78 @@ main > section {
     -webkit-font-feature-settings: 'liga';
 
     color: inherit;
+}
+
+.nav {
+    $self: &;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    #{$self}__item {
+        position: relative;
+        display: inline-flex;
+
+        justify-content: center;
+        align-content: center;
+
+        height: 60px;
+
+        margin-left: $space-x-large;
+        padding: $space-large;
+
+        font-family: 'Lexend Deca', Helvetica, sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        line-height: 1;
+
+        color: $color-white;
+
+        &, &:after {
+            transition: all .3s;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 4px;
+
+            background-color: $color-white;
+            transform: translateX(-50%);
+        }
+        &--active, &:hover {
+            &:after {
+                width: 90%;
+            }
+        }
+
+        &:hover {
+            color: $color-link;
+            transform: translateY(-1px);
+            &:after {
+                background-color: $color-link;
+            }
+        }
+
+        .icon {
+            margin-right: .2em;
+        }
+    }
+}
+
+footer .nav .nav__item {
+    font-size: 1rem;
+    text-transform: none;
+
+    &:after {
+        bottom: auto;
+        top: 0;
+        height: 1px;
+    }
 }
 
 .btn {
@@ -277,6 +418,7 @@ main > section {
 
     &[disabled] #{$self}__button {
         background-color: $color-disabled;
+        opacity: .2;
     }
 
     #{$self}__field__validation-message {
@@ -335,10 +477,156 @@ main > section {
 
 .link-list {
     $self: &;
+    margin: $space-large 0;
 
-    #{$self}__row {
+    &__row {
+        position: relative;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
+
+        padding: $space-medium;
+        margin: $space-small 0;
+
+        &:nth-child(odd) {
+            background-color: $color-dark-grey;
+        }
+        &:before, &:after {
+            content: '';
+            position: absolute;
+            display: block;
+
+            top: 0;
+            bottom: 0;
+            width: 0;
+
+            background-color: $color-action;
+            transition: all .2s;
+        }
+        &:before {
+            left: -2px;
+        }
+        &:after {
+            right: -2px;
+        }
+        &:hover {
+            &:before, &:after {
+                width: 5px;
+            }
+            &:before {
+                left: -10px;
+            }
+            &:after {
+                right: -10px;
+            }
+        }
+    }
+    &__key,
+    &__url {
+        a {
+            color: $color-dark-link;
+            &:hover {
+                color: $color-action;
+            }
+        }
+    }
+
+    &__key,
+    &__action {
+        flex-basis: 15%;
+        min-width: 15%;
+    }
+    &__url {
+        flex-basis: 70%;
+        min-width: 70%;
+    }
+
+    &__action {
+        text-align: right;
+    }
+}
+
+.accordion {
+    $self: &;
+    width: 100%;
+    &__item {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: stretch;
+        align-items: stretch;
+
+        width: 100%;
+        padding: .25rem 0;
+
+        + #{$self}__item {
+            border-top: 1px solid $color-grey;
+        }
+    }
+
+    &__header, &__body, &__footer {
+        flex-basis: 100%;
+    }
+
+    &__header,
+    &__body,
+    &__footer {
+        padding: .25rem 0;
+    }
+
+    &__header {
+        cursor: pointer;
+        display: flex;
+        &:before {
+            @extend .icon;
+            content: 'arrow_drop_down';
+        }
+    }
+
+    &__footer {
+        justify-content: space-between;
+        .btn {
+            font-size: .75rem;
+            & + .btn {
+                margin-left: .25em;
+            }
+        }
+    }
+
+    &__body,
+    &__footer {
+        display: none;
+    }
+
+    &__item--active {
+        #{$self}__header:before {
+            content: 'arrow_drop_up';
+        }
+
+        #{$self}__body,
+        #{$self}__footer {
+            animation: fadeIn .3s;
+            display: flex;
+        }
+    }
+
+    @media screen and (max-width: 999px) {
+        &__body,
+        &__footer {
+            flex-basis: 50%;
+        }
+        &__footer {
+            justify-content: flex-end;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }

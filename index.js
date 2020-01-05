@@ -23,6 +23,7 @@ express()
 
     .use(passport.initialize())
     .use(passport.session())
+    
     .use(userInViews)
 
     .use(bodyParser.json({ type: '*/json' }))

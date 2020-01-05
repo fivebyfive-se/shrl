@@ -13,4 +13,8 @@ router
         res.renderView('user', { userProfile });
     })
 
+    .get('/urls', (req, res) => {
+
+    })
+
 module.exports = router;

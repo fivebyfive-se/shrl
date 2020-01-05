@@ -8,16 +8,20 @@ block content
     hr
 
     h3 My links
-        div.link-list
-            div.link-list__row
-                div.link-list__key
-                    a(href='/key') key
-                div.link-list__url
-                    a(href='/') https://url/
-                div.link-list__action
-                    a.btn.btn--warning.btn--small(href='#',data-delete-url='key')
-                        i.icon warning
-                        | Delete
+    if app_data && app_data.urls
+        .link-list
+            each url, key in app_data.urls
+                .link-list__row
+                    .link-list__key
+                        a(href='/' + key)= key
+                    .link-list__url
+                        a(href=url)= url
+                    .link-list__action
+                        a.btn.btn--warning.btn--small(href='#',data-delete-url=key)
+                            i.icon warning
+                            | Delete
+    else
+        p No links created yet.
 
     hr
 
