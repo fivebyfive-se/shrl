@@ -73,7 +73,10 @@ html(lang='en')
                     +navigation
 
         script(src='//unpkg.com/unfetch/polyfill')
-
+        script(src='//cdn.jsdelivr.net/npm/regenerator-runtime@0.13.3/runtime.min.js')
+        
         block styles
-
         block scripts
+
+        if locals.user
+            script(src='/js/delete-button.js')

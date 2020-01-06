@@ -24,28 +24,37 @@ const wrapper = (prefix = null) => {
     const safeGet = async (key, fallback = null) => {
         const realKey = _prefixKey(key);
         if (_isKeyEmpty(realKey)) {
-            return Promise.reject(null);
+            return fallback;
         }
         try {
             const value = await redis.get(realKey);
             return value || fallback;
         } catch {
-            return Promise.reject(fallback);
+            return fallback
         }
     };
     
     const safeSet = async (key, value) => {
         if (await safeExists(key)) {
-            return Promise.reject(null);
+            return null;
         }
         const realKey = _prefixKey(key);
     
         try {
             return !!(await redis.set(realKey, value));
         } catch {
-            return Promise.reject(null);
+            return null;
         }
     };
+
+    const safeDelete = async (key) => {
+        const realKey = _prefixKey(key);
+        try {
+            return !!(await redis.del(realKey));
+        } catch {
+            return false;
+        }
+    }
     
     const safeHExists = async (hash, key = null) => {
         if (!key) {
@@ -55,7 +64,7 @@ const wrapper = (prefix = null) => {
             const realHash = _prefixKey(hash);
             return !!(await redis.hexists(realHash, key));
         } catch {
-            return Promise.reject(null);
+            return null
         }
     };
     
@@ -114,6 +123,15 @@ const wrapper = (prefix = null) => {
         }
     };
 
+    const safeLRem = async (key, value, count = 0) => {
+        const realKey = _prefixKey(key);
+        try {
+            return (await redis.lrem(realKey, count, value));
+        } catch {
+            return 0;
+        }
+    };
+
     const safeMGet = async (...keys) => {
         if (keys.length === 0) {
             return [];
@@ -130,6 +148,7 @@ const wrapper = (prefix = null) => {
         exists: safeExists,
         get: safeGet,
         set: safeSet,
+        del: safeDelete,
 
         hexists: safeHExists,
         hget: safeHGet,
@@ -138,6 +157,7 @@ const wrapper = (prefix = null) => {
         llen: safeLLen,
         lpush: safeLPush,
         lrange: safeLRange,
+        lrem: safeLRem,
 
         mget: safeMGet
     };

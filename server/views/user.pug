@@ -11,7 +11,7 @@ block content
     if app_data && app_data.urls
         .link-list
             each url, key in app_data.urls
-                .link-list__row
+                .link-list__row(data-delete-container-for=key)
                     .link-list__key
                         a(href='/' + key)= key
                     .link-list__url

@@ -25,12 +25,13 @@
         })(element, callback, Array.isArray(eventToWatch) ? eventToWatch : [eventToWatch || 'change']);
     };
 
-    const req = async (url, body = null) => {
-        const options = body === null ? undefined : {
-            method: 'POST',
+    const req = async (url, type = 'GET', body = null) => {
+        const options = {
+            method: type,
             cache: 'no-cache',
+            credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
+            body: body ? JSON.stringify(body) : null
         };
         try {
             const resp = await fetch(url, options);
@@ -135,7 +136,7 @@
 
             form.setAttribute('disabled', 'disabled');
 
-            const resp = await req(`/url/${key}`, { url });
+            const resp = await req(`/url/${key}`, 'post', { url });
             if (resp && resp.success) {
                 const resultContainer = document.getElementById('result');
 

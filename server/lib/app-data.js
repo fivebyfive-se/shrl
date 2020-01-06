@@ -14,30 +14,69 @@ const SECRET_KEY = process.env.APP_DATA_KEY || 'shirrley';
 const generateToken = (userId) => sha512(userId, SECRET_KEY);
 const generateKey = (userId, ...subKeys) => [sha512(userId), ...subKeys].join('_');
 
+const tokenRedis = redisWrapper('token_');
 const userRedis = redisWrapper('user_');
 const urlRedis = redisWrapper('url_');
+
+const sanitizeAppData = (appData) => {
+    return {
+        token: null,
+        urls: {},
+        level: 0,
+        ...appData
+    }
+};
 
 class AppData {
     constructor(request) {
         const self = this;
 
         // #region Private members
-        let _session = request.session || {},
-            _isLoggedIn = !!(request.user),
-            _userId = _isLoggedIn ? request.user.id : null,
+        let _session,
+            _isLoggedIn,
+            _userId,
+            _userToken,
+            _userUrlKey,
+            _appData
+        ;
+
+        const initAppData = (userId, session) => {
+            _session = session || {},
+            _isLoggedIn = !!(userId),
+            _userId = _isLoggedIn ? userId : null,
             _userToken = _isLoggedIn ? generateToken(_userId) : null,
             _userUrlKey = _isLoggedIn ? generateKey(_userId, 'url') : null,
-            _appData = !_isLoggedIn ? null
-                :  _session.app_data && _session.app_data.token && _session.app_data.urls && _session.app_data.token === _userToken 
-                    ? { ..._session.app_data }
-                    : { token: _userToken, urls: {} }
-        ;
-        // #endregion
+            _appData = sanitizeAppData(
+                _isLoggedIn && _session.app_data && _session.app_data.token && _session.app_data.urls && _session.app_data.token === _userToken 
+                    ? { level: 1, ..._session.app_data }
+                    : { level: 1, token: _userToken, urls: {} }
+            )
+        };
 
         this.getIsLoggedIn = () => _isLoggedIn;
         this.getAppData = () => (_isLoggedIn ? { ..._appData } : null);
         this.getUrls = () => _isLoggedIn ? _appData.urls : {}; 
         this.getToken = ()  => _isLoggedIn ? _appData.token : null;
+
+        initAppData(request.user ? request.user.id : null, request.session);
+        // #endregion
+
+        this.parseToken = async (token) => {
+            const userIdKey = generateKey(token, 'userid');
+            const userId = await tokenRedis.get(userIdKey);
+            if (userId) {
+                initAppData(userId, {});
+            }
+            return self;
+        };
+
+        this.saveToken = async () => {
+            if (_isLoggedIn) {
+                const userIdKey = generateKey(_userToken, 'userid');
+                await tokenRedis.set(userIdKey, _userId);
+            }
+            return self;
+        };
         
         this.addUrl = async (...urlKeys) => {
             if (_isLoggedIn) {
@@ -48,7 +87,16 @@ class AppData {
             return self;
         };
 
-        this.updateUrls = async (numUrls = 16) => {
+        this.removeUrl = async (urlKey) => {
+            if (_isLoggedIn) {
+                await urlRedis.del(urlKey);
+                await userRedis.lrem(_userUrlKey, urlKey);
+                await self.updateUrls();
+                await self.updateSession();
+            }
+        };
+
+        this.updateUrls = async (numUrls = 255) => {
             if (_isLoggedIn) {
                 const keys = await userRedis.lrange(_userUrlKey, numUrls);
                 const vals = await urlRedis.mget(...keys);
@@ -57,6 +105,7 @@ class AppData {
                     ..._appData,
                     urls: arrayUtil.toObject(keys, vals)
                 };
+                await self.updateSession();
             }
             return self;
         };

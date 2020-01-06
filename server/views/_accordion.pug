@@ -1,7 +1,7 @@
 if app_data && app_data.urls
     .accordion
         each url, key in app_data.urls
-            .accordion__item
+            .accordion__item(data-delete-container-for=key)
                 .accordion__header
                     h4= key
                 .accordion__body

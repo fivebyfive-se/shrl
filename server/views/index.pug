@@ -31,11 +31,20 @@ block content
             +formfieldvalidationmessage('url', "URL doesn't look right")
 
         +formsection('key')(style='display: none')
-            +formlabel('key', 'Shortened URL', 'min 5 characters, only alphanumeric characters')
-            +formfieldcontainer('with-prefix')
-                span https://shrl.cc/
-                +formfield('key', null, 'text', 'display')(value = suggestion, minlength=5, maxlength=255)
-            +formfieldvalidationmessage('key', "The chosen short-code is already in use")
+            if locals.user && app_data && app_data.level >= 1
+                +formlabel('key', 'Shortened URL', 'min 5 characters, only alphanumeric characters')
+                +formfieldcontainer('with-prefix')
+                    span https://shrl.cc/
+                    +formfield('key', null, 'text', 'display')(value = suggestion, minlength=5, maxlength=255)
+                +formfieldvalidationmessage('key', "The chosen short-code is already in use")
+            else
+                .form__label Shortened URL
+                +formfieldcontainer('with-prefix')
+                    span https://shrl.cc/
+                    .form__field.form__field--display= suggestion
+                .form__field__help-message 
+                    | #[a(href='/auth/login') Log in or register] 
+                    | to enable changing generated URL.
 
         +formsection('button')
             button#submit-button(class=itemWithVariants('form', 'button', 'fill'), type='submit')
@@ -48,5 +57,4 @@ block styles
 
 
 block scripts
-    script(src='//cdn.jsdelivr.net/npm/regenerator-runtime@0.13.3/runtime.min.js')
     script(src='/js/home.js')

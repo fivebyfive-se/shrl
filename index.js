@@ -2,23 +2,19 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
 
-const Redis = require('ioredis');
 const expressSession = require('express-session');
-const passport = require('./lib/passport');
-const session = require('./lib/session');
+const passport = require('./server/lib/passport');
+const session = require('./server/lib/session');
 
-const ensureHttps = require('./lib/middleware/ensure-https');
-const userInViews = require('./lib/middleware/user-in-views');
+const ensureHttps = require('./server/lib/middleware/ensure-https');
+const userInViews = require('./server/lib/middleware/user-in-views');
 
-const authRouter = require('./routes/auth');
-const userRouter = require('./routes/user');
-const urlRouter = require('./routes/url');
-const rootRouter = require('./routes/root');
+const authRouter = require('./server/routes/auth');
+const userRouter = require('./server/routes/user');
+const urlRouter = require('./server/routes/url');
+const rootRouter = require('./server/routes/root');
 
 const PORT = process.env.PORT || 80;
-
-let RedisStore = require('connect-redis')(expressSession);
-let client = new Redis(process.env.REDIS_URL);
 
 const app = express();
 
@@ -29,10 +25,7 @@ if (process.env.NODE_ENV === 'production') {
 app
     .use(ensureHttps)
 
-    .use(expressSession({
-        ...session,
-        store: new RedisStore({ client })
-    }))
+    .use(expressSession(session))
 
     .use(passport.initialize())
     .use(passport.session())
@@ -43,7 +36,7 @@ app
     .use(express.static(path.join(__dirname, 'public')))
 
 
-    .set('views', path.join(__dirname, 'views'))
+    .set('views', path.join(__dirname, 'server', 'views'))
     .set('view engine', 'pug')
 
     .use('/auth', authRouter)
