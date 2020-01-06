@@ -20,7 +20,13 @@ const PORT = process.env.PORT || 80;
 let RedisStore = require('connect-redis')(expressSession);
 let client = new Redis(process.env.REDIS_URL);
 
-express()
+const app = express();
+
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1); // trust first proxy
+}
+
+app
     .use(ensureHttps)
 
     .use(expressSession({
