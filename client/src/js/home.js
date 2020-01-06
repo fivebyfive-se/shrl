@@ -124,7 +124,11 @@
     // #endregion
 
     fields
-        .map((f) => document.getElementById(f.key))
+        .map((f) => {
+            const el = document.getElementById(f.key);
+            f.value = el.value;
+            return el;
+        })
         .forEach((el) => handleChange(el, ['keyup', 'change'], validateField));
 
     form.addEventListener('submit', async (ev) => {
