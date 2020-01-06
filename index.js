@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
 
+const Redis = require('ioredis');
 const expressSession = require('express-session');
 const passport = require('./lib/passport');
 const session = require('./lib/session');
@@ -16,10 +17,16 @@ const rootRouter = require('./routes/root');
 
 const PORT = process.env.PORT || 80;
 
+let RedisStore = require('connect-redis')(expressSession);
+let client = new Redis(process.env.REDIS_URL);
+
 express()
     .use(ensureHttps)
 
-    .use(expressSession(session))
+    .use(expressSession({
+        ...session,
+        client: new RedisStore({ client })
+    }))
 
     .use(passport.initialize())
     .use(passport.session())
