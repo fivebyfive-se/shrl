@@ -22,8 +22,10 @@
             if (key) {
                 const result = await deleteKey(key);
                 if (result && result.success) {
-                    (document.querySelectorAll(`[data-delete-container-for=${key}]`) || []).forEach((c) => {
-                        c.style.display = 'none';
+                    (document.querySelectorAll(`[data-delete-container-for]`) || []).forEach((c) => {
+                        if (c.dataset.deleteContainerFor === key) {
+                            c.style.display = 'none';                            
+                        }
                     });
                 } else {
                     btn.classList.add('error');
