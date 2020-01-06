@@ -5,11 +5,12 @@
     margin: $space-large 0;
 
     &__row {
-        position: relative;
-        display: flex;
-        flex-direction: row;
+        @extend %flex;
+        @extend %flex--direction-row;
+        @extend %flex--align-center;
         justify-content: space-between;
-        align-items: center;
+
+        position: relative;
 
         padding: $space-medium;
         margin: $space-small 0;
@@ -69,6 +70,25 @@
 
     &__action {
         text-align: right;
+    }
+    @media screen and (max-width: $wide-breakpoint) {
+        #{$self}__row {
+            flex-wrap: wrap;
+        }
+
+        #{$self}__key,
+        #{$self}__url {
+            flex-basis: 50%;
+            min-width: 50%;
+        }
+        #{$self}__url {
+            text-align: right;
+        }
+        #{$self}__action {
+            flex-basis: 100%;
+            min-width: 100%;
+            margin-top: 1rem;
+        }
     }
 }
 

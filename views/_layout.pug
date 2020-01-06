@@ -24,6 +24,7 @@ mixin navlink(id, href, icon, title, ...variants)
 mixin navigation
     nav(class=navClass)
         if locals.user
+            +navlink(null, '/user', 'account_circle', user.displayName)
             +navlink(null, '/auth/logout', 'exit_to_app', 'Log out')
         else
             +navlink(null, '/auth/login', 'person_outline', 'Log in', 'icon')
@@ -47,7 +48,7 @@ html(lang='en')
         block head
     body
         header= url
-            section.d-flex
+            section
                 h1
                     a(href='/')
                         img(src='/img/logo-white.svg', alt=title)
@@ -66,10 +67,8 @@ html(lang='en')
                         include _accordion.pug
 
         footer
-            section.d-flex
-                - let year = new Date().getFullYear()
-                p Copyright &copy; #[= year]
-                    a(href='//kalle.surf', target='_blank')  Kalle R&auml;is&auml;nen.
+            section
+                p Copyright &copy; #[= new Date().getFullYear()] #[a(href='//kalle.surf', target='_blank') Kalle R&auml;is&auml;nen].
                 if !hideNavigation
                     +navigation
 

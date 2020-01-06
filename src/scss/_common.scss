@@ -21,6 +21,49 @@ $space-xx-large: 1.5rem;
 
 $border-radius: 4px;
 
+$max-width: 1024px;
+$wide-breakpoint: 999px;
+
+
+%flex {
+    $self: &;
+    display: flex;
+
+    &--direction-row {
+        flex-direction: row;
+    }
+    &--direction-column {
+        flex-direction: column;
+    }
+    &--align-center {
+        align-items: center;
+    }
+    &--align-start {
+        align-items: flex-start;
+    }
+    &--align-end {
+        align-items: flex-end;
+    }
+    &--justify-space-between {
+        justify-content: space-between;
+    }
+    &--justify-center {
+        justify-content: center;
+    }
+    &--justify-start {
+        justify-content: flex-start;
+    }
+    &--justify-end {
+        justify-content: flex-end;
+    }
+}
+
+%inline-flex {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
 %icon {
     display: inline-block;
 
@@ -28,6 +71,7 @@ $border-radius: 4px;
     font-size: 1.1em;
     font-weight: normal;
     font-style: normal;
+
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;
@@ -35,5 +79,55 @@ $border-radius: 4px;
     word-wrap: normal;
     direction: ltr;
     -webkit-font-feature-settings: 'liga';
+
     color: inherit;
+}
+
+%button {
+    @extend %inline-flex;
+
+    margin: 0;
+    padding: .5em 1em;
+
+    background-color: $color-action;
+    border: none;
+    border-radius: $border-radius;
+    color: $color-white;
+
+    font-family: 'Lexend Deca', Helvetica, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+
+    transition: all .25s;
+
+    .icon {
+        margin-right: .2em;
+    }
+
+    &:hover,
+    &:focus {
+        box-shadow: 0 0 5px rgba($color-black, .4);
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        background-color: $color-disabled;
+    }
+
+    &--small {
+        font-size: .9em;
+        padding: .4em .75em;
+    }
+
+    &--warning {
+        background-color: $color-dark-link;
+    }
+
+    &--success {
+        background-color: $color-green;
+    }
+
+    &--error {
+        background-color: $color-red;
+    }
 }

@@ -4,8 +4,8 @@
     $self: &;
     width: 100%;
     &__item {
-        display: flex;
-        flex-direction: row;
+        @extend %flex;
+        @extend %flex--direction-row;
         flex-wrap: wrap;
         justify-content: stretch;
         align-items: stretch;
@@ -35,8 +35,9 @@
     }
 
     &__header {
+        @extend %flex;
         cursor: pointer;
-        display: flex;
+
         &:before {
             @extend %icon;
             content: 'arrow_drop_down';
@@ -70,7 +71,7 @@
         }
     }
 
-    @media screen and (max-width: 999px) {
+    @media screen and (max-width: $wide-breakpoint) {
         &__body,
         &__footer {
             flex-basis: 50%;
