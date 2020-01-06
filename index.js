@@ -25,7 +25,7 @@ express()
 
     .use(expressSession({
         ...session,
-        client: new RedisStore({ client })
+        store: new RedisStore({ client })
     }))
 
     .use(passport.initialize())
