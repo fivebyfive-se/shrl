@@ -15,8 +15,7 @@
     const navItemClass = itemClass(navClass, 'item');
 
 mixin navlink(id, href, icon, title, ...variants)
-    -
-        let classes = baseWithVariants(navItemClass, ...variants, id && view === id ? 'active' : null);
+    - let classes = baseWithVariants(navItemClass, ...variants, id && view === id ? 'active' : null);
     a(href=href, class=classes)&attributes(attributes)
         i.icon= icon
         = title

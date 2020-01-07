@@ -2,6 +2,8 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
 
+const CachePugTemplates = require('cache-pug-templates');
+
 const expressSession = require('express-session');
 const passport = require('./server/lib/passport');
 const session = require('./server/lib/session');
@@ -17,7 +19,7 @@ const rootRouter = require('./server/routes/root');
 const PORT = process.env.PORT || 80;
 
 const app = express();
-
+const views = path.join(__dirname, 'server', 'views');
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1); // trust first proxy
 }
@@ -36,7 +38,7 @@ app
     .use(express.static(path.join(__dirname, 'public')))
 
 
-    .set('views', path.join(__dirname, 'server', 'views'))
+    .set('views', views)
     .set('view engine', 'pug')
 
     .use('/auth', authRouter)
@@ -44,5 +46,9 @@ app
     .use('/url', urlRouter)
     .use('/', rootRouter)
 
-    .listen(PORT, () => console.log(`Listening on ${PORT}`))
+    .listen(PORT, () => {
+        console.log(`Listening on ${PORT}`);
+        const cache = new CachePugTemplates({ app, views });
+        cache.start();
+    })
 ;
