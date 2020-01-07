@@ -12,9 +12,6 @@ router
         const { _raw, _json, ...userProfile } = req.user;
         res.renderView('user', { userProfile });
     })
-
-    .get('/urls', (req, res) => {
-
-    })
+;
 
 module.exports = router;

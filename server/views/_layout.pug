@@ -23,8 +23,9 @@ mixin navlink(id, href, icon, title, ...variants)
 
 mixin navigation
     nav(class=navClass)
+        +navlink('page:about', '/page/about', 'info', 'About')
         if locals.user
-            +navlink(null, '/user', 'account_circle', user.displayName)
+            +navlink('user', '/user', 'account_circle', user.displayName)
             +navlink(null, '/auth/logout', 'exit_to_app', 'Log out')
         else
             +navlink(null, '/auth/login', 'person_outline', 'Log in', 'icon')

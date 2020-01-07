@@ -66,6 +66,7 @@ class AppData {
         this.getAppData = () => (_isLoggedIn ? { ..._appData } : null);
         this.getUrls = () => _isLoggedIn ? _appData.urls : {}; 
         this.getToken = ()  => _isLoggedIn ? _appData.token : null;
+        this.getUserLevel = () => _isLoggedIn ? _appData.level : 0;
 
         this.getUrlList = (max = 255) => objUtil.toArray(self.getUrls()).slice(0, max);
         // #endregion
@@ -135,6 +136,7 @@ class AppData {
     get token() { return this.getToken(); }
     get urls() { return this.getUrls(); }
     get numUrls() { return Object.keys(this.urls || {}).length; }
+    get userLevel() { return this.getUserLevel(); }
 }
 
 module.exports = AppData;

@@ -27,8 +27,29 @@ const toArray = (obj) => {
     );
 };
 
+const addProperty = (obj, propName, propValue) => {
+    const obj2 = {};
+    obj2[propName] = propValue;
+    return {...obj, ...obj2};
+};
+
+const mapKeysValues = (obj, keyMap = (k) => k, valMap = (v) => v) => {
+    const ret = {},
+        keys = Object.keys(obj),
+        values = Object.values(obj);
+
+    keys.forEach((k, i, all) => {
+        ret[keyMap(k, i, all)] = valMap(values[i], i, values);
+    });
+
+    return ret;
+};
+
 module.exports = {
     merge,
     get,
-    toArray
+    toArray,
+
+    addProperty,
+    mapKeysValues
 };

@@ -2,6 +2,7 @@ const express = require('express');
 
 const parse = require('url-parse');
 
+const prismic = require('../lib/prismic-wrapper');
 const redis = require('../lib/rediswrapper')('url_');
 const keyutil = require('../lib/util/key');
 
@@ -15,12 +16,24 @@ router
 
     .get('/', (req, res) => {
         const suggestion = keyutil.generate(process.env.KEY_DEFAULT_LENGTH || 5);
-        res.renderView('index', { suggestion });
+        res.renderView('index', { 
+            suggestion,
+            minKeyLength: 5 - (req.appData ? req.appData.userLevel : 0)
+        });
     })
 
-    .get('404/:key?', (req, res) => {
+    .get('/404/:key?', (req, res) => {
         const key = req.params.key || null;
         res.renderView('notfound', { key, invalidKey: key && !keyutil.valid(key) })
+    })
+
+    .get('/page/:page', async (req, res) => {
+        const page = await prismic.getPage(req.params.page);
+        res.renderView('page', {
+            view: `page:${req.params.page}`,
+            subtitle: page.title,
+            page
+        });
     })
 
     .get('/:key', async (req, res) => {
@@ -45,6 +58,7 @@ router
             res.renderView('redirect', {
                 success: true,
                 hideNavigation: true,
+                delay: req.appData && req.appData.userLevel > 0 ? 5 : 15,
                 href,
                 hostname,
                 displayUrl,
