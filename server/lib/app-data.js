@@ -1,6 +1,12 @@
-const arrayUtil = require('./util/array');
-const redisWrapper = require('./rediswrapper');
 const crypto = require('crypto');
+const redisWrapper = require('./rediswrapper');
+
+const arrayUtil = require('./util/array');
+const objUtil = require('./util/object');
+
+const tokenRedis = redisWrapper('token_');
+const userRedis = redisWrapper('user_');
+const urlRedis = redisWrapper('url_');
 
 const sha512 = (...items) => {
     const hash = crypto.createHash('sha512');
@@ -11,46 +17,49 @@ const sha512 = (...items) => {
 };
 
 const SECRET_KEY = process.env.APP_DATA_KEY || 'shirrley';
+
 const generateToken = (userId) => sha512(userId, SECRET_KEY);
 const generateKey = (userId, ...subKeys) => [sha512(userId), ...subKeys].join('_');
-
-const tokenRedis = redisWrapper('token_');
-const userRedis = redisWrapper('user_');
-const urlRedis = redisWrapper('url_');
 
 const sanitizeAppData = (appData) => {
     return {
         token: null,
         urls: {},
         level: 0,
-        ...appData
+        ...(appData || {})
     }
 };
 
 class AppData {
-    constructor(request) {
-        const self = this;
+    static async fromToken(token) {
+        return await new AppData().parseToken(token);
+    }
+    static async fromRequest(request) {
+        return await new AppData().parseSession(request);
+    }
 
+    constructor() {
+        const self = this;
         // #region Private members
-        let _session,
-            _isLoggedIn,
+        let _isLoggedIn,
             _userId,
             _userToken,
             _userUrlKey,
             _appData
         ;
 
-        const initAppData = (userId, session) => {
-            _session = session || {},
+        const initAppData = (userId, app_data) => {
             _isLoggedIn = !!(userId),
             _userId = _isLoggedIn ? userId : null,
             _userToken = _isLoggedIn ? generateToken(_userId) : null,
             _userUrlKey = _isLoggedIn ? generateKey(_userId, 'url') : null,
             _appData = sanitizeAppData(
-                _isLoggedIn && _session.app_data && _session.app_data.token && _session.app_data.urls && _session.app_data.token === _userToken 
-                    ? { level: 1, ..._session.app_data }
-                    : { level: 1, token: _userToken, urls: {} }
-            )
+                !_isLoggedIn
+                    ? null 
+                    : app_data && app_data.token && app_data.urls && app_data.token === _userToken 
+                        ? { level: 1, ...app_data }
+                        : { level: 1, token: _userToken, urls: {} }
+            );
         };
 
         this.getIsLoggedIn = () => _isLoggedIn;
@@ -58,8 +67,20 @@ class AppData {
         this.getUrls = () => _isLoggedIn ? _appData.urls : {}; 
         this.getToken = ()  => _isLoggedIn ? _appData.token : null;
 
-        initAppData(request.user ? request.user.id : null, request.session);
+        this.getUrlList = (max = 255) => objUtil.toArray(self.getUrls()).slice(0, max);
         // #endregion
+
+        this.parseSession = async (request) => {
+            initAppData(objUtil.get(request, 'user.id'), objUtil.get(request, 'session.app_data'));
+            return self;
+        };
+
+        this.saveSession = async (request) => {
+            if (_isLoggedIn) {
+                request.session.app_data = { ..._appData };
+            }
+            return self;
+        };
 
         this.parseToken = async (token) => {
             const userIdKey = generateKey(token, 'userid');
@@ -82,7 +103,6 @@ class AppData {
             if (_isLoggedIn) {
                 await userRedis.lpush(_userUrlKey, ...urlKeys);
                 await self.updateUrls();
-                await self.updateSession();
             }
             return self;
         };
@@ -92,7 +112,6 @@ class AppData {
                 await urlRedis.del(urlKey);
                 await userRedis.lrem(_userUrlKey, urlKey);
                 await self.updateUrls();
-                await self.updateSession();
             }
         };
 
@@ -105,14 +124,7 @@ class AppData {
                     ..._appData,
                     urls: arrayUtil.toObject(keys, vals)
                 };
-                await self.updateSession();
-            }
-            return self;
-        };
-        
-        this.updateSession = async () => {
-            if (_isLoggedIn) {
-                request.session.app_data = { ..._appData };
+                await self.saveToken();
             }
             return self;
         };

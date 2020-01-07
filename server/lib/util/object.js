@@ -18,7 +18,17 @@ const get = (obj, path, fallback = null) => {
     return index === pathLength ? ret : fallback;
 };
 
+const toArray = (obj) => {
+    return Object.keys(obj || {}).reduce(
+        (prev, curr) => {
+            return [...prev, { key: curr, value: obj[curr] }];
+        }, 
+        []
+    );
+};
+
 module.exports = {
     merge,
-    get
+    get,
+    toArray
 };

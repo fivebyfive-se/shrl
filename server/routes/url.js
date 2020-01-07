@@ -1,5 +1,6 @@
 const express = require('express');
 
+const AppData = require('../lib/app-data');
 const redis = require('../lib/rediswrapper')('url_');
 const validateKey = require('../lib/middleware/validate-key');
 
@@ -19,7 +20,7 @@ router
         const url = req.body.url || null;
         const success = key && url ? (await redis.set(key, url)) : false;
 
-        if (success && req.user && req.appData) {
+        if (success && req.appData) {
             await req.appData.addUrl(key);
         }
 
@@ -30,7 +31,7 @@ router
     .delete('/:key', validate, async (req, res) => {
         const key = req.params.key;
         
-        if (req.user && req.appData) {
+        if (req.appData) {
             await req.appData.removeUrl(key);
             res.send({ key, success: true });
         } else {
