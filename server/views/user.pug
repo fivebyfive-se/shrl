@@ -2,12 +2,12 @@ extends _layout.pug
 
 block content
     h2
-        img(src=userProfile.picture, alt='Profile image')
+        img(src=userProfile.picture, alt=__('user.phrase.profile-image'))
         = userProfile.displayName
 
     hr
 
-    h3 My links
+    h3= __('user.title.urls:My links')
     if app_data && app_data.urls
         .link-list
             each url, key in app_data.urls
@@ -19,15 +19,15 @@ block content
                     .link-list__action
                         a.btn.btn--warning.btn--small(href='#',data-delete-url=key)
                             i.icon warning
-                            | Delete
+                            = __('btn.delete')
     else
-        p No links created yet.
+        p= __('accordion.phrase.nolinks')
 
     hr
 
     div
         p
-            a(href='/') Back to SHRL.cc
+            a(href='/')= __('btn.back-to-homepage:Back to SHRL.cc')
 
 block styles
     link(rel='stylesheet', href='/css/user.css')

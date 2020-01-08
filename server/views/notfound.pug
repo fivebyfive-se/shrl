@@ -2,9 +2,9 @@ extends _layout.pug
 
 block content
     if  keyInvalid
-        h2 Invalid key
+        h2= __('notfound.title.invalid:Invalid key')
     else
-        h2 Not found 
+        h2= __('notfound.title.notfound:Not found') 
 
     hr
 
@@ -17,4 +17,4 @@ block content
     hr
 
     p
-        a(href='/') Back to SHRL.cc
+        a(href='/')= __('btn.back-to-homepage')

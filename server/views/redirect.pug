@@ -7,7 +7,7 @@ block head
 block content
     p.redirect
         if success
-            span.preamble Redirecting to
+            span.preamble= __('redirect.preamble:Redirecting to')
             a.url(href=href) !{displayUrl}.
         else
             span.error #{title}

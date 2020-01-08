@@ -16,6 +16,14 @@ const userRouter = require('./server/routes/user');
 const urlRouter = require('./server/routes/url');
 const rootRouter = require('./server/routes/root');
 
+const i18n = require('i18n');
+
+i18n.configure({
+    locales: ['en', 'sv'],
+    directory: path.join(__dirname, 'locales'),
+    objectNotation: true
+});
+
 const PORT = process.env.PORT || 80;
 
 const app = express();
@@ -32,6 +40,8 @@ app
     .use(passport.initialize())
     .use(passport.session())
     
+    .use(i18n.init)
+
     .use(userInViews)
 
     .use(bodyParser.json({ type: '*/json' }))

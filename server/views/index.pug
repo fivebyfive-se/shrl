@@ -25,31 +25,32 @@ mixin formfieldvalidationmessage(id, message)
 block content
     form#main-form.form(disabled)
         +formsection('url')
-            +formlabel('url', 'URL to shorten', 'http or https')
+            +formlabel('url', __('form.field.url.label:URL to shorten'), __('form.field.url.sublabel:http or https'))
             +formfieldcontainer('with-icon')
-                +formfield('url', 'link', 'text', 'fill')(placeholder='https://example.com')
-            +formfieldvalidationmessage('url', "URL doesn't look right")
+                +formfield('url', 'link', 'text', 'fill')(placeholder=__('form.field.url.placeholder:https://example.com'))
+            +formfieldvalidationmessage('url', __("form.field.url.validation-message:URL doesn't look right"))
 
         +formsection('key')(style='display: none')
             if locals.user && app_data && app_data.level >= 1
-                +formlabel('key', 'Shortened URL', 'min 5 characters, only alphanumeric characters')
+                +formlabel('key', __('form.field.key.label:Shortened URL'), __('form.field.key.sublabel:min %s characters, only alphanumeric characters', 5))
                 +formfieldcontainer('with-prefix')
-                    span https://shrl.cc/
+                    span= __('form.field.key.prefix:https://shrl.cc/')
                     +formfield('key', null, 'text', 'display')(value=suggestion, minlength=5, maxlength=255)
-                +formfieldvalidationmessage('key', "The chosen short-code is already in use")
+                +formfieldvalidationmessage('key', __("form.field.key.validation-message:The chosen short-code is already in use"))
             else
-                .form__label Shortened URL
+                .form__label= __('form.field.key.label:Shortened URL')
                 +formfieldcontainer('with-prefix')
                     input(type='hidden', id='key', value=suggestion)
-                    span https://shrl.cc/
+                    span= __('form.field.key.prefix:https://shrl.cc/')
                     .form__field.form__field--display= suggestion
                 .form__field__help-message 
-                    | #[a(href='/auth/login') Log in or register] 
-                    | to enable changing generated URL.
+                    | #[a(href='/auth/login')= __('form.login-or-register.button:Log in or register')] 
+                    = __('form.login-or-register.suffix:to enable changing generated URL')
+                    | .
 
         +formsection('button')
             button#submit-button(class=itemWithVariants('form', 'button', 'fill'), type='submit')
-                span Create shortened link
+                span= __('form.submit-button:Create shortened link')
 
     div#result
 

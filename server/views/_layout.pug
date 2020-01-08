@@ -1,4 +1,5 @@
 -
+    const pageTitle = subtitle ? __('app.title.subtitle', subtitle) : __('app.title.default');
     const itemClass = (baseClass, ...itemClasses) => [baseClass, ...itemClasses].filter((c) => !!c).join('__');
     const baseWithVariants = (base, ...variants) => {
         return [
@@ -22,12 +23,12 @@ mixin navlink(id, href, icon, title, ...variants)
 
 mixin navigation
     nav(class=navClass)
-        +navlink('page:about', '/page/about', 'info', 'About')
+        +navlink('page:about', '/page/about', 'info', __('navigation.about:About'))
         if locals.user
             +navlink('user', '/user', 'account_circle', user.displayName)
-            +navlink(null, '/auth/logout', 'exit_to_app', 'Log out')
+            +navlink(null, '/auth/logout', 'exit_to_app', __('navigation.log-out:Log out'))
         else
-            +navlink(null, '/auth/login', 'person_outline', 'Log in', 'icon')
+            +navlink(null, '/auth/login', 'person_outline', __('navigation.log-in:Log in'), 'icon')
 
 doctype html
 html(lang='en')
@@ -47,10 +48,8 @@ html(lang='en')
         link(rel='stylesheet', href='//fonts.googleapis.com/icon?family=Material+Icons')
         link(rel='stylesheet', href='/css/layout.css')
 
-        if subtitle
-            title #{title}: #{subtitle}
-        else
-            title #{title}
+        title= pageTitle
+        
         block head
     body
         header= url
@@ -69,7 +68,7 @@ html(lang='en')
                         a(href='/user')
                             i.icon account_circle
                             = locals.user.displayName
-                    h4 Recent links
+                    h4= __('aside.title.recent-links:Recent links')
                         include _accordion.pug
 
         footer

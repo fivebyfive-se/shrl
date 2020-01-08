@@ -1,5 +1,6 @@
-module.exports = function (grunt) {
+module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt);
+
   const watchOptions = {
     debounceDelay: 250,
     spawn: false,
@@ -63,6 +64,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-copy');
+
 
   grunt.registerTask('build', ['babel', 'sass', 'copy']);
   grunt.registerTask('dev', ['build', 'watch']);

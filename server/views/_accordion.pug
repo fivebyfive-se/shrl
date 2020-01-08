@@ -1,4 +1,4 @@
-if app_data && app_data.urls
+if app_data && app_data.urlPreview && app_data.urlPreview.length > 0
     .accordion
         each item in app_data.urlPreview
             .accordion__item(data-delete-container-for=item.key)
@@ -9,11 +9,11 @@ if app_data && app_data.urls
                 .accordion__footer
                     a.btn.btn--small(href='/' + item.key)
                         i.icon link
-                        | Go to URL
+                        = __('btn.go-to-link:Go to URL')
                     a.btn.btn--warning.btn--small(href='#',data-delete-url=item.key)
                         i.icon warning
-                        | Delete
+                        = __('btn.delete:Delete')
     script(src='/js/accordion.js')
     link(rel='stylesheet', href='/css/accordion.css')
 else
-    p No links created yet.
+    p= __('accordion.phrase.nolinks:No links created yet')
