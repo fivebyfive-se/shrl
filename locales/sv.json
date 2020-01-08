@@ -1,0 +1,8 @@
+{
+    "app": {
+        "title": {
+            "default": "SHRRL",
+            "subtitle": "SHRRL: %s"
+        }
+    }
+}

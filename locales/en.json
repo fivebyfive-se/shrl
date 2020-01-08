@@ -1,0 +1,61 @@
+{
+	"app": {
+		"title": {
+			"default": "SHRRL",
+			"subtitle": "SHRRL: %s"
+		}
+	},
+	"app.title.default": "app.title.default",
+	"aside": {
+		"title": {
+			"recent-links": "Recent links"
+		}
+	},
+	"navigation": {
+		"about": "About",
+		"log-out": "Log out",
+		"log-in": "Log in"
+	},
+	"btn": {
+		"go-to-link": "Go to URL",
+		"delete": "Delete",
+		"back-to-homepage": "Back to SHRL.cc"
+	},
+	"form": {
+		"label": {
+			"url": {
+				"sublabel": "http or https"
+			}
+		},
+		"field": {
+			"url": {
+				"label": "URL to shorten",
+				"sublabel": "http or https",
+				"placeholder": "https://example.com",
+				"validation-message": "URL doesn't look right"
+			},
+			"key": {
+				"label": "Shortened URL",
+				"sublabel": "min %s characters, only alphanumeric characters",
+				"prefix": "https://shrl.cc/",
+				"validation-message": "The chosen short-code is already in use"
+			}
+		},
+		"login-or-register": {
+			"button": "Log in or register",
+			"suffix": " to enable changing generated URL"
+		},
+		"submit-button": "Create shortened link"
+	},
+	"user": {
+		"title": {
+			"urls": "My links"
+		},
+		"phrase": {
+			"profile-image": "user.phrase.profile-image"
+		}
+	},
+	"redirect": {
+		"preamble": "Redirecting to"
+	}
+}
