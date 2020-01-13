@@ -2,7 +2,7 @@ extends _layout.pug
 
 block head
     if success
-        meta(http-equiv='refresh', content='7,' + href)
+        meta(http-equiv='refresh', content=delay + ',' + href)
 
 block content
     p.redirect

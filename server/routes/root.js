@@ -37,9 +37,20 @@ router
     })
 
     .get('/:key', async (req, res) => {
-        let url = null;
+        let url = null,
+            delay = 15;
         try {
             url = await redis.get(req.params.key);
+            if (await redis.exists(`${req.params.key}_userLevel`)) {
+                const userLevel = (await redis.get(`${req.params.key}_userLevel`)) || 0;
+                if (userLevel <= 0) {
+                    delay = 15;
+                } else if (userLevel <= 1) {
+                    delay = 7;
+                } else {
+                    delay = 3;
+                }
+            }
         } catch {
             url = null;
         }
@@ -62,6 +73,7 @@ router
                 href,
                 hostname,
                 displayUrl,
+                delay,
                 subtitle: `Redirecting to ${hostname}`
             });
         } else {

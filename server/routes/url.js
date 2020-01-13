@@ -21,6 +21,7 @@ router
         const success = key && url ? (await redis.set(key, url)) : false;
 
         if (success && req.appData) {
+            await redis.set(`${key}_userLevel`, req.appData.userLevel || 0);
             await req.appData.addUrl(key);
         }
 
