@@ -122,6 +122,10 @@ main {
         background-color: $color-grey;
         border-radius: $border-radius;
         color: $color-black;
+        max-width: 100%;
+        overflow-x: hidden;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 
     &.two-column {
@@ -165,12 +169,14 @@ main {
             >section {
                 border-radius: $border-radius 0 0 $border-radius;
                 flex-grow: 1;
+                flex-shrink: 1;
             }
 
             >aside {
                 border-radius: 0 $border-radius $border-radius 0;
                 flex-grow: 0;
-                width: 500px;
+                flex-shrink: 0;
+                width: 300px;
 
                 &:before {
                     top: 0;
