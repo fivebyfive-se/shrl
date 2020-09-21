@@ -38,19 +38,10 @@ router
 
     .get('/:key', async (req, res) => {
         let url = null,
-            delay = 15;
+            delay = 0;
         try {
             url = await redis.get(req.params.key);
-            if (await redis.exists(`${req.params.key}_userLevel`)) {
-                const userLevel = (await redis.get(`${req.params.key}_userLevel`)) || 0;
-                if (userLevel <= 0) {
-                    delay = 15;
-                } else if (userLevel <= 1) {
-                    delay = 3;
-                } else {
-                    delay = 0;
-                }
-            }
+            
         } catch {
             url = null;
         }
