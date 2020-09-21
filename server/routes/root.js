@@ -46,9 +46,9 @@ router
                 if (userLevel <= 0) {
                     delay = 15;
                 } else if (userLevel <= 1) {
-                    delay = 7;
-                } else {
                     delay = 3;
+                } else {
+                    delay = 0;
                 }
             }
         } catch {
