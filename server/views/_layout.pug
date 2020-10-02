@@ -73,7 +73,7 @@ html(lang='en')
 
         footer
             section
-                p Copyright &copy; #[= new Date().getFullYear()] #[a(href='//kalle.surf', target='_blank') Kalle R&auml;is&auml;nen].
+                p Copyright &copy; #[= new Date().getFullYear()] #[a.fivebyfive(href='//fivebyfive.se', target='_blank') Fivebyfive].
                 if !hideNavigation
                     +navigation
 
@@ -82,6 +82,9 @@ html(lang='en')
 
         block styles
         block scripts
+            style.
+                @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@900&display=swap');
+                .fivebyfive { font-family: 'Spartan', 'Futura', 'Futura PT', 'Beteckna', sans-serif; font-weight: 900; }
 
         if locals.user
             script(src='/js/delete-button.js')
