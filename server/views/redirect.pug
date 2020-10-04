@@ -5,17 +5,15 @@ block head
         meta(http-equiv='refresh', content=delay + ',' + href)
 
 block content
-    p.advert
-        = __('redirect.advert:Brought to you by')
-        a.fivebyfive(href='https://fivebyfive.se/') Fivebyfive
-        | .
-    hr
     p.redirect
         if success
             span.preamble= __('redirect.preamble:Redirecting to')
             a.url(href=href) !{displayUrl}.
         else
-            span.error #{title}
+            span.error #{title}    
+    hr
+    p.advert
+        | !{__('redirect.advert:Brought to you by')} #[a.fivebyfive(href='//fivebyfive.se', target='_blank') Fivebyfive].
 
 block styles
     link(rel='stylesheet', href='/css/redirect.css')
