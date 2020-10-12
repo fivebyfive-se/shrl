@@ -1,0 +1,133 @@
+.form .form__button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center; }
+
+.form .form__field__icon {
+  display: inline-block;
+  font-family: 'Material Icons';
+  font-size: 1.1em;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  color: inherit; }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 999px;
+  margin: 0 auto; }
+  .form .form__section {
+    display: block;
+    margin: 0.5rem; }
+    .form .form__section:nth-child(even) {
+      background-color: #CFD8DC;
+      padding: 0.5rem; }
+  .form .form__field-container {
+    position: relative; }
+    .form .form__field-container--with-icon .form__field:not(.form__field--display) {
+      padding-left: 1.75rem; }
+    .form .form__field-container--with-prefix {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .form .form__field-container--with-prefix .form__field {
+        flex-grow: 1; }
+  .form .form__field,
+  .form .form__button {
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 4px; }
+    .form .form__field--fill,
+    .form .form__button--fill {
+      width: 100%; }
+  .form self__field,
+  .form self__button,
+  .form self__field__icon,
+  .form .form__field__validation-message {
+    transition: all .4s ease-in-out; }
+  .form .form__field {
+    background-color: #fff;
+    border-color: #000;
+    color: #000; }
+    .form .form__field:focus {
+      outline: none;
+      box-shadow: 0 0 0.75rem rgba(0, 131, 143, 0.4); }
+      .form .form__field:focus:not(.invalid) {
+        border-color: #00838F; }
+    .form .form__field--display {
+      padding: 0.25rem; }
+      .form .form__field--display:not(:focus):not(.invalid) {
+        cursor: pointer;
+        width: auto;
+        padding-left: 0;
+        background: transparent;
+        color: #FF5722;
+        border-color: transparent; }
+        .form .form__field--display:not(:focus):not(.invalid) + .form__field__icon--validation {
+          opacity: 0; }
+  .form .form__field__icon {
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    line-height: 0;
+    transform: translateY(50%); }
+    .form .form__field__icon--validation {
+      opacity: 0;
+      left: auto;
+      right: 0.5rem; }
+  .form .form__button {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    background-color: #006064;
+    color: #fff;
+    cursor: pointer; }
+    .form .form__button, .form .form__button__icon {
+      line-height: 1.5; }
+    .form .form__button:hover {
+      box-shadow: 0 0 0.75rem rgba(0, 131, 143, 0.2); }
+  .form .form__button__icon {
+    display: inline-block;
+    margin-right: 0.25rem;
+    font-size: 1em; }
+  .form .form__label {
+    display: flex;
+    margin-bottom: 0.25rem;
+    font-size: .75rem;
+    justify-content: space-between; }
+    .form .form__label__sub-label {
+      font-size: .6rem; }
+      .form .form__label__sub-label:before {
+        content: '('; }
+      .form .form__label__sub-label:after {
+        content: ')'; }
+  .form[disabled] .form__button {
+    background-color: #78909C;
+    opacity: .2; }
+  .form .form__field__help-message,
+  .form .form__field__validation-message {
+    margin-top: 0.25rem;
+    font-size: .75rem; }
+  .form .form__field__validation-message {
+    opacity: 0;
+    text-align: right; }
+  .form .form__section.valid .form__field, .form .form__section.valid .form__field:focus {
+    border-color: #00E676; }
+  .form .form__section.valid .form__field__icon {
+    color: #00E676; }
+  .form .form__section.invalid .form__field, .form .form__section.invalid .form__field:focus {
+    border-color: #FF1744; }
+  .form .form__section.invalid .form__field, .form .form__section.invalid .form__field__icon {
+    color: #FF1744; }
+  .form .form__section.invalid .form__field__validation-message {
+    opacity: 1; }
+
+#shortened, #result {
+  display: none; }

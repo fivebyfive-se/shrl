@@ -1,0 +1,13 @@
+.preamble {
+  margin-right: 0.5rem; }
+
+.count-down {
+  display: inline-block;
+  margin-left: .5rem; }
+
+.url {
+  font-weight: normal; }
+  .url__part--auth {
+    display: none; }
+  .url__part--hostname {
+    font-weight: bold; }
