@@ -1,0 +1,42 @@
+@import './common';
+
+.prices {
+    @extend %flex,
+        %flex--justify-space-between,
+        %flex--align-stretch;
+        
+    .pricing__level {
+        @extend %flex,
+            %flex--direction-column,
+            %flex--justify-stretch;
+
+        background-color: $color-dark-grey;
+        flex-basis: 100%;
+        max-width: 100%;
+        width: 100%;
+        padding: $space-medium;
+        border-radius: $border-radius;
+
+        .level__title {
+            text-align: center;
+            flex-grow: 0;
+        }
+        .level__description {
+            flex-grow: 2;
+        }
+        .level__cta {
+            text-align: center;
+            &__button {
+                @extend %button, %button--success;
+            }
+        }
+    }
+
+    @media screen and (min-width: $wide-breakpoint+1) {
+        .pricing__level {
+            flex-basis: 30%;
+            max-width: 30%;
+            width: 30%;
+        }
+    }
+}

@@ -44,6 +44,10 @@ $wide-breakpoint: 999px;
     &--align-end {
         align-items: flex-end;
     }
+    &--align-stretch {
+        align-items: stretch;
+    }
+
     &--justify-space-between {
         justify-content: space-between;
     }
@@ -55,6 +59,9 @@ $wide-breakpoint: 999px;
     }
     &--justify-end {
         justify-content: flex-end;
+    }
+    &--justify-stretch {
+        justify-content: stretch;
     }
 }
 
