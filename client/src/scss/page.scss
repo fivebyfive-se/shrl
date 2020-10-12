@@ -1,14 +1,14 @@
 @import './common';
 
 .prices {
-    @extend %flex,
-        %flex--justify-space-between,
-        %flex--align-stretch;
-        
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+
     .pricing__level {
-        @extend %flex,
-            %flex--direction-column,
-            %flex--justify-stretch;
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
 
         background-color: $color-dark-grey;
         flex-basis: 100%;
