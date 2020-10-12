@@ -3,6 +3,8 @@ const express = require('express');
 const parse = require('url-parse');
 
 // const prismic = require('../lib/prismic-wrapper');
+const Redis = require('ioredis');
+
 const redis = require('../lib/rediswrapper')('url_');
 const keyutil = require('../lib/util/key');
 
@@ -10,12 +12,23 @@ const validateKey = require('../lib/middleware/validate-key');
 const renderViewData = require('../lib/middleware/render-view-data');
 const injectPrismic = require('../lib/middleware/prismic-dom');
 
+const cache = require('express-redis-cache')({
+    client: new Redis(process.env.REDIS_URL, {connectTimeout: 60000}),
+    prefix: 'fivebyfive'
+});
+
+const dontCacheUser =  function (req, res, next) {
+    res.use_express_redis_cache = !req.user;
+ 
+    next();
+};
+
 const router = express.Router();
 
 router
     .use(renderViewData)
 
-    .get('/', (req, res) => {
+    .get('/', dontCacheUser, cache.route({ expire: 15000 }), (req, res) => {
         const suggestion = keyutil.generate(process.env.KEY_DEFAULT_LENGTH || 5);
         res.renderView('index', { 
             suggestion,
@@ -23,12 +36,12 @@ router
         });
     })
 
-    .get('/404/:key?', (req, res) => {
+    .get('/404/:key?', dontCacheUser, cache.route(), (req, res) => {
         const key = req.params.key || null;
         res.renderView('notfound', { key, invalidKey: key && !keyutil.valid(key) })
     })
 
-    .get('/page/:page', injectPrismic, async (req, res) => {
+    .get('/page/:page', dontCacheUser, cache.route(), injectPrismic, async (req, res) => {
         const page = await req.prismicApi.getByUID('page', req.params.page, {});
         res.renderView('page', {
             view: `page:${req.params.page}`,
@@ -37,7 +50,7 @@ router
         });
     })
 
-    .get('/:key', async (req, res) => {
+    .get('/:key', cache.route(), async (req, res) => {
         let url = null,
             delay = 15;
         try {
