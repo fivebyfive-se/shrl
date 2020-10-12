@@ -39,6 +39,7 @@ module.exports = (grunt) => {
           'public/css/accordion.css': 'client/src/scss/accordion.scss',
           'public/css/redirect.css': 'client/src/scss/redirect.scss',
           'public/css/user.css': 'client/src/scss/user.scss',
+          'public/css/page.css': 'client/src/scss/page.scss'
         }
       }
     },

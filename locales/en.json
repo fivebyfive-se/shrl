@@ -19,7 +19,9 @@
 	"btn": {
 		"go-to-link": "Go to URL",
 		"delete": "Delete",
-		"back-to-homepage": "Back to SHRL.cc"
+		"back-to-homepage": "Back to SHRL.cc",
+		"buy": "Join SHRL at %s",
+		"coming-soon": "Coming soon"
 	},
 	"form": {
 		"label": {
@@ -58,5 +60,8 @@
 	"redirect": {
 		"preamble": "Redirecting to",
 		"advert": "SHRL.cc brought to you with love by"
+	},
+	"page": {
+		"pricing": "Pricing"
 	}
 }

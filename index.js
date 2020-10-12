@@ -2,7 +2,9 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
 
-const CachePugTemplates = require('cache-pug-templates');
+require('dotenv').config();
+
+// const CachePugTemplates = require('cache-pug-templates');
 
 const expressSession = require('express-session');
 const passport = require('./server/lib/passport');
@@ -58,7 +60,5 @@ app
 
     .listen(PORT, () => {
         console.log(`Listening on ${PORT}`);
-        const cache = new CachePugTemplates({ app, views });
-        cache.start();
     })
 ;

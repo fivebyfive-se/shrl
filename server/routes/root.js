@@ -2,12 +2,13 @@ const express = require('express');
 
 const parse = require('url-parse');
 
-const prismic = require('../lib/prismic-wrapper');
+// const prismic = require('../lib/prismic-wrapper');
 const redis = require('../lib/rediswrapper')('url_');
 const keyutil = require('../lib/util/key');
 
 const validateKey = require('../lib/middleware/validate-key');
 const renderViewData = require('../lib/middleware/render-view-data');
+const injectPrismic = require('../lib/middleware/prismic-dom');
 
 const router = express.Router();
 
@@ -27,11 +28,11 @@ router
         res.renderView('notfound', { key, invalidKey: key && !keyutil.valid(key) })
     })
 
-    .get('/page/:page', async (req, res) => {
-        const page = await prismic.getPage(req.params.page);
+    .get('/page/:page', injectPrismic, async (req, res) => {
+        const page = await req.prismicApi.getByUID('page', req.params.page, {});
         res.renderView('page', {
             view: `page:${req.params.page}`,
-            subtitle: page.title,
+            subtitle: '',
             page
         });
     })
