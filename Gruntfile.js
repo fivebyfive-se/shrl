@@ -1,3 +1,5 @@
+const sass = require('node-sass');
+
 module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt);
 
@@ -32,6 +34,10 @@ module.exports = (grunt) => {
       }
     },
     sass: {
+      options: {
+          implementation: sass,
+          sourceMap: true
+      },
       dist: {
         files: {
           'public/css/layout.css': 'client/src/scss/layout.scss',
@@ -62,7 +68,6 @@ module.exports = (grunt) => {
     },
   });
 
-  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
