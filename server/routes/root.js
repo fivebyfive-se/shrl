@@ -37,6 +37,18 @@ router
         });
     })
 
+    .post('/cache/clear', async (req, res) => {
+        const deleted = await Promise.resolve((resolve, reject) => {
+            cache.del('*', (err, deleted) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(deleted);
+            });
+        });
+        res.send({ deleted });
+    })
+
     .get('/404/:key?', dontCacheUser, cache.route(), (req, res) => {
         const key = req.params.key || null;
         res.renderView('notfound', { key, invalidKey: key && !keyutil.valid(key) })
@@ -49,18 +61,6 @@ router
             subtitle: '',
             page
         });
-    })
-
-    .get('/cache/clear', async (req, res) => {
-        const deleted = await Promise.resolve((resolve, reject) => {
-            cache.del('*', (err, deleted) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(deleted);
-            });
-        });
-        res.send({ deleted });
     })
 
     .get('/:key', cache.route(), async (req, res) => {
