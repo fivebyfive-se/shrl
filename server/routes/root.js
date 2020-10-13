@@ -51,6 +51,18 @@ router
         });
     })
 
+    .get('/cache/clear', async (req, res) => {
+        const deleted = await Promise.resolve((resolve, reject) => {
+            cache.del('shrl*', (err, deleted) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(deleted);
+            });
+        });
+        res.send({ deleted });
+    })
+
     .get('/:key', cache.route(), async (req, res) => {
         let url = null,
             delay = 15;
