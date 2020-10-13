@@ -1,0 +1,117 @@
+@include critical {
+    body {
+        margin: 0;
+        padding: 0;
+
+        background-color: var(--color-background-secondary);
+        color: var(--color-text);
+        min-height: 100vh;
+    }
+    header, main, footer {
+        margin: 0 auto;
+        width: 100%;
+        max-width: get-setting(grid, max-width);
+    }
+    main {
+        background-color: var(--color-background);
+        &.two-column {
+            @extend %flex,
+                %flex--justify-space-between;
+
+            @include desktop-only {
+                > section {
+                    @include flex-item-width(75%);
+                }
+                > aside {
+                    @include flex-item-width(25%);
+                    border-left: 1px solid var(--color-background-secondary);
+                }    
+            }
+            @include mobile-only {
+                flex-direction: column;
+                > section, > aside {
+                    width: 100%;
+                }
+                > aside {
+                    border-top: 2px solid var(--color-background-secondary);
+                }
+            }
+        }
+        > section, > aside {
+            @include padding(1);
+        }
+    }
+    .navigation {
+        @extend %flex,
+            %flex--justify-flex-start,
+            %flex--align-flex-end;
+
+        @include margin-y(1);
+
+        @include mobile-only {
+            justify-content: space-between;
+            @include margin-x(.5);
+        }
+
+        a.logo svg {
+            width: 93px;
+            height: 79px;
+            fill: var(--color-text);
+            stroke: var(--color-text);
+        }
+    }
+    .nav {
+        @extend %flex,
+            %flex--justify-flex-start,
+            %flex--align-center;
+     
+        &__item {
+            @extend %flex,
+                %flex--inline,
+                %flex--align-center,
+                %flex--justify-center;
+            @extend %font--body, %font--base;
+
+            @include margin-x(1);
+            @include padding(.5, 1);
+
+            color: var(--color-text);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+
+            &--active {
+                color: var(--color-secondary);
+                border-bottom-color: var(--color-secondary);
+            }
+            @include mobile-only {
+                @include margin-x(.5);
+                @include padding-x(.5);
+                flex-direction: column;
+                span {
+                    white-space: pre;
+                }
+            }
+        }
+    }
+}
+
+@include non-critical {
+    footer .navigation  {
+        @extend %flex--align-flex-start,
+            %flex--justify-flex-start;
+        flex-direction: row-reverse;
+        .nav {
+            flex-direction: row-reverse;
+        }
+    }
+    a.logo:hover svg {
+        fill: var(--color-primary);
+        stroke: var(--color-tertiary);
+    }
+    .nav__item:hover {
+        color: var(--color-secondary);
+        i {
+            color: var(--color-quaternary);
+        }
+    }
+}

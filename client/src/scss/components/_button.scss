@@ -1,0 +1,38 @@
+@include critical {
+    .button {
+        @extend %flex--inline,
+            %flex--align-center,
+            %flex--justify-center;
+
+        @include padding(1);
+        cursor: pointer;
+        width: auto;
+
+        > i {
+            @include margin-right(.5);
+        }
+
+        &, &:disabled {
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            background-color: transparent;    
+        }
+        &--primary, &--primary:disabled {
+            color: var(--color-primary-text);
+            background-color: var(--color-primary);
+        }
+        &:disabled {
+            cursor: not-allowed;
+            opacity: .7;
+        }
+    }
+}
+
+@include non-critical {
+    .button {
+        &:hover {
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+        }
+    }
+}

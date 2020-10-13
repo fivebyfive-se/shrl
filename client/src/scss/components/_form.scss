@@ -1,0 +1,173 @@
+@include critical {
+    .form {
+        $self: &;
+        @extend %flex,
+            %flex--column;
+
+        background-color: transparent;
+        color: var(--color-text-secondary);
+        width: get-setting(layout, form-width);
+        max-width: 100%;
+
+
+        &__section {
+            @include margin(.5);
+
+            &--buttons {
+                @extend %flex,
+                    %flex--justify-flex-end;
+            }
+        }
+
+        #{$self}__field-container {
+            position: relative;
+            &--with-icon {
+                #{$self}__field:not(#{$self}__field--display) {
+                    @include padding-left(1.5);
+                }
+            }
+            &--with-prefix {
+                @extend %flex,
+                    %flex--justify-space-between,
+                    %flex--align-center;
+
+                #{$self}__field {
+                    flex-grow: 1;
+                }
+            }
+        }
+        #{$self}__field,
+        #{$self}__button {
+            @extend %font--body, %font--base;
+
+            @include padding(.5);
+            border: 1px solid transparent;
+            border-radius: 0;
+        
+            &--fill {
+                width: 100%;
+            }
+        }
+
+        #{self}__field,
+        #{self}__button,
+        #{self}__field__icon,
+        #{$self}__field__validation-message {
+            transition: all .4s ease-in-out;
+        }
+    
+        #{$self}__field {
+            background-color: var(--color-background);
+            border-color: var(--color-text);
+            color: var(--color-text);
+        
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 4px var(--color-primary);
+    
+                &:not(.invalid) {
+                    border-color: var(--color-primary);
+                }
+            }
+    
+            &--display {
+                @include padding(.5);
+                
+                &:not(:focus):not(.invalid) {
+                    cursor: pointer;
+                    width: auto;
+                    padding-left: 0;
+    
+                    background: transparent;
+                    color: var(--color-primary);
+                    border-color: transparent;
+    
+                    & + #{$self}__field__icon--validation {
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+    
+        #{$self}__field__icon {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+    
+            line-height: 0;
+            transform: translateY(50%);
+    
+            &--validation {
+                opacity: 0;
+                left: auto;
+                right: 1rem;
+            }
+        }
+        
+        #{$self}__button {
+            @extend %flex, 
+                %flex--inline;
+
+            @include padding(1, 2);
+    
+            background-color: var(--color-primary);
+            color: var(--color-primary-text);
+    
+            cursor: pointer;
+            width: auto;
+
+            i {
+                @include margin-right(.5);
+            }
+    
+        }
+    
+        #{$self}__label {
+            @extend %flex,
+                %flex--justify-space-between;
+
+            @extend %font--bold;
+    
+            &__sub-label {
+                @extend %font--small, %font--italic;
+                &:before { content: '('; }
+                &:after  { content: ')'; }
+            }
+        }
+    
+        &[disabled] #{$self}__button {
+            opacity: .2;
+        }
+        #{$self}__field__help-message,
+        #{$self}__field__validation-message {
+            @extend %font--small, %font--italic;
+        }
+        #{$self}__field__validation-message {
+            color: var(--color-error);
+            opacity: 0;
+            text-align: right;
+        }
+    
+        #{$self}__section {
+            &.valid {
+                #{$self}__field, #{$self}__field:focus {
+                    border-color: var(--color-success);
+                }
+                #{$self}__field__icon {
+                    color: var(--color-success);
+                }
+            }
+            &.invalid {
+                #{$self}__field, #{$self}__field:focus {
+                    border-color: var(--color-error);
+                }
+                #{$self}__field, #{$self}__field__icon {
+                    color: var(--color-error);
+                }
+                #{$self}__field__validation-message {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

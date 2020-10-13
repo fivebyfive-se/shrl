@@ -1,0 +1,79 @@
+
+%flex {
+    display: flex;
+
+    &--inline {
+        display: inline-flex;
+    }
+    &--row {
+        flex-direction: row;
+    }
+    &--column {
+        flex-direction: column;
+    }
+    &--wrap {
+        flex-wrap: wrap;
+    }
+    &--justify-center {
+        justify-content: center;
+    }
+    &--align-center {
+        align-items: center;
+    }
+    &--justify-space-between {
+        justify-content: space-between;
+    }
+    &--align-space-between {
+        align-items: space-between;
+    }
+    &--justify-space-evenly {
+        justify-content: space-evenly;
+    }
+    &--align-space-evenly {
+        align-items: space-evenly;
+    }
+    &--justify-flex-start {
+        justify-content: flex-start;
+    }
+    &--align-flex-start {
+        align-items: flex-start;
+    }
+    &--justify-flex-end {
+        justify-content: flex-end;
+    }
+    &--align-flex-end {
+        align-items: flex-end;
+    }
+    &--justify-stretch {
+        justify-content: stretch;
+    }
+    &--align-stretch {
+        align-items: stretch;
+    }
+}
+
+
+%font {
+    @include font($family: 'body', $size: 'base', $style: 'normal');
+    &--body {
+        @include font($family: 'body');
+    }
+    &--heading {
+        @include font($family: 'heading');
+    }
+    &--monospace {
+        @include font($family: 'monospace');
+    }
+
+    @each $style, $rules in get-setting('font', 'style') {
+        &--#{$style} {
+            @include font-style($style);
+        }    
+    }
+    @each $name, $size in get-setting('font', 'size') {
+        &--#{$name} {
+            @include font-size($name);
+        }
+    }
+}
+

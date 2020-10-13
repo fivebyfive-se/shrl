@@ -1,0 +1,86 @@
+$settings: (
+    breakpoint: (
+        mobile: (max-width: 700px),
+        desktop: (min-width: 701px)
+    ),
+
+    layout: (
+        header-height: 100px,
+        form-width: 700px
+    ),
+
+    grid: (
+        num-cols: 12,
+        gutter: 4rem,
+        max-width: 1400px
+    ),
+
+    color: (
+        text:  #111,
+        text-secondary: #333,
+        background: #eee,
+        background-secondary: #ddd,
+
+
+        primary: #077,
+        secondary: #057,
+        tertiary: #ba0,
+        quaternary:  #770,
+
+        success: #4b7,
+        error: #b44
+    ),
+
+    rem-height: 9px,
+    rem-height-mobile: 8px,
+
+    font: (
+        family: (
+            body: "'Work Sans', sans-serif",
+            heading: "'Work Sans', sans-serif",
+            monospace: "'Fira Code', monospace"
+        ),
+        style: (
+            light: (
+                weight: 100,
+                style: 'normal'
+            ),
+            italic: (
+                weight: 400,
+                style: 'italic'
+            ),
+            normal: (
+                weight: 400,
+                style: 'normal'
+            ),
+            bold: (
+                weight: 600,
+                style: 'normal'
+            ),
+            bold-italic: (
+                weight: 600,
+                style: 'italic'
+            ),
+            black: (
+                weight: 800,
+                style: 'normal'
+            )
+        ),
+        size: (
+            base: 2, // * 1rem
+            large: 3,
+            x-large: 4,
+            xx-large: 6,
+            xxx-large: 8,
+            small: 1.75,
+            x-small: 1.5,
+            xx-small: 1.25,
+            xxx-small: 1
+        ),
+        line-height: (
+            base: 2.5 // * 1rem
+        )
+    )
+);
+
+

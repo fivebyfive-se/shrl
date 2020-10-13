@@ -1,0 +1,49 @@
+@include critical {
+    .slices {
+        border-top: 1px dashed var(--color-background-secondary);
+    }
+
+    .pricing {
+        &__levels {
+            @extend %flex,
+                %flex--justify-stretch,
+                %flex--align-stretch;
+            width: 100%;
+            @include mobile-only {
+                flex-direction: column;
+            }
+        }
+        &__level {
+            @extend %flex,
+                %flex--column,
+                %flex--justify-stretch,
+                %flex--align-stretch;
+
+            @include padding-y(1);
+            @include desktop-only {
+                @include flex-item-width(33%);
+                @include margin-right(1);
+            }
+            @include mobile-only {
+                @include flex-item-width(100%);   
+                
+                &:nth-child(even) {
+                    @include margin-x(-.5);
+                }                 
+            }
+            &:nth-child(even) {
+                @include padding-x(1);
+                background-color: var(--color-background-secondary);
+             }
+
+            .level {
+                &__title {
+                    margin: 0;
+                }
+                &__description {
+                    flex-grow: 2;
+                }
+            }
+        }
+    }
+}

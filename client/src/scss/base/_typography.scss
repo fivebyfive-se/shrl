@@ -1,0 +1,75 @@
+
+@include critical {
+    html {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        font-size: get-setting('rem-height');
+        @include mobile-only {
+            font-size: get-setting('rem-height-mobile');
+        }
+    }
+      
+      // Site-wide base styles.
+    body, form, input, select, textarea, option, button {
+            @extend %font, %font--body, %font--base;
+    }
+
+    h1, h2, h3, h4, h5 {
+        @extend %font, 
+            %font--heading,
+            %font--black;
+        @include margin(0);
+    }
+    p {
+        @extend %font,
+            %font--body,
+            %font--normal;
+    }
+    strong, b {
+        @extend %font--bold;
+        em, i {
+            @extend %font--bold-italic;
+        }
+    }
+    em, i {
+        @extend %font--italic;
+        strong, b {
+            @extend %font--bold-italic;
+        }
+    }
+
+
+    h1, .heading1 { 
+        @extend %font--black, %font--xxx-large;
+    }
+    h2, .heading2 { 
+        @extend %font--black, %font--xx-large;
+    }
+    h3, .heading3 { 
+        @extend %font--x-large;
+    }
+    h4, .heading4 { 
+        @extend %font--large,
+            %font--bold;
+    }
+    h5, .heading5 { 
+        @extend %font--large,
+            %font--bold-italic;
+    }
+
+    pre, code, .mono {
+        @extend %font--monospace;
+    }
+}
+
+@include non-critical {
+    a {
+        color: var(--color-primary);
+        text-decoration: none;
+
+        &:hover {
+            color: var(--color-secondary);
+        }
+    }
+}
+

@@ -63,5 +63,10 @@
 	},
 	"page": {
 		"pricing": "Pricing"
+	},
+	"accordion": {
+		"phrase": {
+			"nolinks": "No links created yet"
+		}
 	}
 }

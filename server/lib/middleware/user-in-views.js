@@ -13,7 +13,6 @@ module.exports = async (req, res, next) => {
 
         req.appData = token ? await AppData.fromToken(token) : null;
     }
-
     if (req.appData) {
         if (req.appData.numUrls === 0) {
             await req.appData.updateUrls();

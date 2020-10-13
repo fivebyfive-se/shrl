@@ -21,8 +21,7 @@ module.exports = (grunt) => {
         sourceMap: false,
         presets: ['@babel/preset-env'],
         plugins: [
-          '@babel/plugin-transform-regenerator',
-          '@babel/plugin-transform-async-to-generator'
+          'babel-plugin-transform-async-to-promises'
         ]
       },
       dist: {
@@ -40,12 +39,8 @@ module.exports = (grunt) => {
       },
       dist: {
         files: {
-          'public/css/layout.css': 'client/src/scss/layout.scss',
-          'public/css/index.css': 'client/src/scss/index.scss',
-          'public/css/accordion.css': 'client/src/scss/accordion.scss',
-          'public/css/redirect.css': 'client/src/scss/redirect.scss',
-          'public/css/user.css': 'client/src/scss/user.scss',
-          'public/css/page.css': 'client/src/scss/page.scss'
+          'public/css/non-critical.css': 'client/src/scss/non-critical.scss',
+          'public/css/critical.css': 'client/src/scss/critical.scss'
         }
       }
     },

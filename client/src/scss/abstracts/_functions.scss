@@ -1,0 +1,77 @@
+@function get-setting($path...) {
+    $m: $settings;
+    @each $k in $path {
+        @if (map-has-key($m, $k)) {
+            $m: map-get($m, $k);
+        }
+    }
+    @return $m;    
+}
+
+@function get-color($path...) {
+    @return get-setting('color', $path...);
+}
+@function get-color-gradient-step($num) {
+    @return nth(get-setting('color', gradient), $num);
+}
+
+@function get-font-family($name: body) {
+    @return get-setting('font', 'family', $name);
+}
+@function get-font-style($name: normal) {
+    @return get-setting('font', 'style', $name);
+}
+@function get-font-size($name: base) {
+    @return get-setting('font', 'size', $name);
+}
+@function get-font-line-height($name: base) {
+    @return get-setting('font', 'line-height', $name);
+}
+
+@function map-value-to-prop($map, $key, $prefix: '') {
+    @if map-has($map, $key) {
+        @return "#{$prefix}#{$key}: #{map-get($map, $key)}";
+    }
+    @return null;
+}
+
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+
+    @return $number;
+}
+
+@function stepped-size($pixel-size, $step: null, $floor: true) {
+    @if $step == null or type-of($step) != 'number' {
+        $step: get-setting('rem-height');
+    }
+    @if unit($pixel-size) == 'rem' and unit($step) == 'px' {
+        $pixel-size: $pixel-size * $step;
+    }
+    $unitless-size: strip-unit($pixel-size);
+
+    @if $unitless-size == 0 {
+        @return 0;
+    }
+
+    $unitless-step: strip-unit($step);
+    $ratio: $unitless-size / $unitless-step;
+
+    @if $floor == true {
+        $ratio: floor($ratio);
+    } @else {
+        $ratio: ceil($ratio);
+    }
+
+    @return $ratio * $step;
+}
+
+@function size($factor, $base: 2rem) {
+    @if $factor == 0 or $factor == auto {
+        @return $factor;
+    }
+
+    @return stepped-size($base * $factor, get-setting('rem-height'));
+}

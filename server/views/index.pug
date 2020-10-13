@@ -1,7 +1,7 @@
 extends _layout.pug
 
-mixin formsection(id)
-    div(id=id + '-container', class=itemClass('form', 'section'), data-form-section=id)&attributes(attributes)
+mixin formsection(id, ...variants)
+    div(id=id + '-container', class=itemWithVariants('form', 'section', ...variants), data-form-section=id)&attributes(attributes)
         block
 
 mixin formlabel(target, label, sublabel=null)
@@ -16,7 +16,7 @@ mixin formfieldcontainer(...variants)
 mixin formfield(id, icon=null, type='text', ...variants)
     input(id=id, class=itemWithVariants('form', 'field', ...variants))&attributes(attributes)
     if icon
-        i.material-icons(class=itemWithVariants('form', 'field__icon', 'left'))= icon
+        i(class=[`ri-${icon}`, ...itemWithVariants('form', 'field__icon', 'left')])
     i(class=itemWithVariants('form', 'field__icon', 'validation'), data-validation-for=id)
 
 mixin formfieldvalidationmessage(id, message)
@@ -48,15 +48,12 @@ block content
                     = __('form.login-or-register.suffix:to enable changing generated URL')
                     | .
 
-        +formsection('button')
-            button#submit-button(class=itemWithVariants('form', 'button', 'fill'), type='submit')
+        +formsection('button', 'buttons')
+            button#submit-button.button.button--primary(class=itemWithVariants('form', 'button', 'fill'), type='submit')
+                i.ri-add-circle-fill.form__button__icon
                 span= __('form.submit-button:Create shortened link')
 
     div#result
-
-block styles
-    link(rel='stylesheet', href='/css/index.css')
-
 
 block scripts
     script(src='/js/home.js')

@@ -18,17 +18,17 @@
 mixin navlink(id, href, icon, title, ...variants)
     - let classes = baseWithVariants(navItemClass, ...variants, id && view === id ? 'active' : null);
     a(href=href, class=classes)&attributes(attributes)
-        i.icon= icon
-        = title
+        i(class=`ri-${icon}`)
+        span= title
 
 mixin navigation
     nav(class=navClass)
-        +navlink('page:about', '/page/about', 'info', __('navigation.about:About'))
+        +navlink('page:about', '/page/about', 'information-fill', __('navigation.about:About'))
         if locals.user
-            +navlink('user', '/user', 'account_circle', user.displayName)
-            +navlink(null, '/auth/logout', 'exit_to_app', __('navigation.log-out:Log out'))
+            +navlink('user', '/user', 'account-circle-fill', user.displayName)
+            +navlink(null, '/auth/logout', 'logout-box-fill', __('navigation.log-out:Log out'))
         else
-            +navlink(null, '/auth/login', 'person_outline', __('navigation.log-in:Log in'), 'icon')
+            +navlink(null, '/auth/login', 'user-smile-line', __('navigation.log-in:Log in'), 'icon')
 
 doctype html
 html(lang='en')
@@ -44,19 +44,16 @@ html(lang='en')
         meta(name="msapplication-TileColor", content="#00838f")
         meta(name='theme-color', content='#00838F')
 
-        link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Lexend+Deca|Staatliches&display=swap')
-        link(rel='stylesheet', href='//fonts.googleapis.com/icon?family=Material+Icons')
-        link(rel='stylesheet', href='/css/layout.css')
+        link(rel='stylesheet', href='/css/critical.css')
 
         title= pageTitle
         
         block head
     body
-        header= url
-            section
-                h1
-                    a(href='/')
-                        img(src='/img/logo-white.svg', alt=title)
+        header
+            section.navigation
+                a.logo(href='/')
+                    include partials/logo.svg.pug
                 if !hideNavigation
                     +navigation
         main(class=locals.user ? 'two-column' : '')
@@ -66,7 +63,7 @@ html(lang='en')
                 aside
                     h3 
                         a(href='/user')
-                            i.icon account_circle
+                            i.ri-user-smile-fill
                             = locals.user.displayName
                     h4= __('aside.title.recent-links:Recent links')
                         include _accordion.pug
@@ -74,11 +71,17 @@ html(lang='en')
         footer
             section
                 p Copyright &copy; #[= new Date().getFullYear()] #[a.fivebyfive(href='//fivebyfive.se', target='_blank') Fivebyfive].
+            section.navigation
+                a.logo(href='/')
+                    include partials/logo.svg.pug
                 if !hideNavigation
                     +navigation
 
         script(src='//unpkg.com/unfetch/polyfill')
-        script(src='//cdn.jsdelivr.net/npm/regenerator-runtime@0.13.3/runtime.min.js')
+
+        link(rel='stylesheet', href='//cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css')
+        link(href='//fonts.googleapis.com/css2?family=Nova+Mono&family=Work+Sans:ital,wght@0,200;0,400;0,600;0,800;1,400;1,600&display=swap', rel='stylesheet')
+        link(href='/css/non-critical.css', rel='stylesheet')
 
         block styles
         block scripts

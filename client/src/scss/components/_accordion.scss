@@ -1,0 +1,75 @@
+@include non-critical {
+    .accordion {
+        $self: &;
+        width: 100%;
+        &__item {
+            @extend %flex,
+                %flex--row,
+                %flex--wrap,
+                %flex--justify-stretch,
+                %flex--align-stretch;
+    
+            @include padding-y(.5);
+            width: 100%;
+    
+            + #{$self}__item {
+                border-top: 1px solid var(--color-text-secondary);
+            }
+        }
+    
+        &__header, &__body, &__footer {
+            flex-basis: 100%;
+    
+            h4, div {
+                @extend %font--body, %font--normal, %font--base;
+
+                color: var(--color-text);
+            }
+        }
+    
+        &__header,
+        &__body,
+        &__footer {
+            @include padding-y(.5);
+        }
+    
+        &__header {
+            @extend %flex;
+            cursor: pointer;
+        }
+    
+        &__footer {
+            justify-content: space-between;
+            .btn {
+                @extend %font--small;
+                & + .btn {
+                    @include margin-left(.5);
+                }
+            }
+        }
+    
+        &__body,
+        &__footer {
+            display: none;
+        }
+    
+        &__item--active {
+    
+            #{$self}__body,
+            #{$self}__footer {
+                animation: fadeIn .3s;
+                display: flex;
+            }
+        }
+    
+        @include mobile-only {
+            &__body,
+            &__footer {
+                flex-basis: 50%;
+            }
+            &__footer {
+                justify-content: flex-end;
+            }
+        }
+    }
+}

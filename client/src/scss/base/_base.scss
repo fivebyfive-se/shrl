@@ -1,0 +1,36 @@
+@include critical {
+    :root {
+        --color-text: #{get-color(text)};
+        --color-text-secondary: #{get-color(text-secondary)};
+        --color-background: #{get-color(background)};
+        --color-background-secondary: #{get-color(background-secondary)};
+    
+        --color-primary: #{get-color(primary)};
+        --color-secondary: #{get-color(secondary)};
+        --color-tertiary: #{get-color(tertiary)};
+        --color-quaternary: #{get-color(quaternary)};
+
+        --color-primary-text: #{get-color(background)};
+        --color-secondary-text: #{get-color(background)};
+        --color-tertiary-text: #{get-color(text-secondary)};
+        --color-quaternary-text: #{get-color(background)};
+
+        --color-success: #{get-color(success)};
+        --color-error: #{get-color(error)};
+    }
+    [data-theme="dark"] {
+        --color-background: #{get-color(text)};
+        --color-background-secondary: #{get-color(text-secondary)};
+        --color-text: #{get-color(background)};
+        --color-text-secondary: #{get-color(background-secondary)};
+    }
+    
+    html body {
+        padding: 0;
+        margin: 0;
+        
+        * {
+            box-sizing: border-box !important;
+        }
+    }
+}

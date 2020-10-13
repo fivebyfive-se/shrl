@@ -1,26 +1,24 @@
 extends _layout.pug
 
 block content
-    section.page
-        h2.page__title !{page.getText('page.title')}
-        div.page__intro !{page.getStructuredText('page.intro').asHtml(ctx.linkResolver)}
-        div.page__body !{page.getStructuredText('page.body').asHtml(ctx.linkResolver)}
+    h2.page__title !{page.getText('page.title')}
+    div.page__intro !{page.getStructuredText('page.intro').asHtml(ctx.linkResolver)}
+    div.page__body !{page.getStructuredText('page.body').asHtml(ctx.linkResolver)}
     
     section.slices
         for slice in page.getSliceZone('page.body1').slices
             if slice.sliceType == 'pricing_levels'
                 div.pricing
-                    h3= __('page.pricing')
-                    div.pricing__intro !{slice.nonRepeat.pricing_intro.asHtml()}
-                div.prices
-                    each price in slice.repeat.toArray()
-                        .pricing__level
-                            h4.level__title= price.getText('level_name')
-                            div.level__description !{price.getStructuredText('level_description').asHtml(ctx.linkResolver)}
-                            .level__cta
-                                button.level__cta__button(disabled)
-                                    i.icon add_shopping_cart
-                                    = __('btn.coming-soon')
+                    .pricing__heading
+                        h3= __('page.pricing')
+                        div.pricing__intro !{slice.nonRepeat.pricing_intro.asHtml()}
+                    div.pricing__levels
+                        each price in slice.repeat.toArray()
+                            .pricing__level
+                                h4.level__title= price.getText('level_name')
+                                div.level__description !{price.getStructuredText('level_description').asHtml(ctx.linkResolver)}
+                                .level__button
+                                    button.button(disabled)
+                                        i.ri-vip-crown-line
+                                        = __('btn.coming-soon')
 
-block styles
-    link(rel='stylesheet', href='/css/page.css')
