@@ -11,14 +11,12 @@ const validateKey = require('../lib/middleware/validate-key');
 const renderViewData = require('../lib/middleware/render-view-data');
 const injectPrismic = require('../lib/middleware/prismic-dom');
 
-// const cache = require('express-redis-cache')({
-//     client: new Redis(process.env.REDIS_URL, { connectTimeout: 30000 }),
-//     prefix: 'shrl'
-// });
-
-const cache = {
-    route: (...args) => (req, res, next) => next()
-};
+const cacheClient = new Redis(process.env.REDIS_URL, { connectTimeout: 30000 });
+cacheClient.on('error', (...args) => console.log(args));
+const cache = require('express-redis-cache')({
+     client: cacheClient,
+     prefix: 'shrl'
+});
 
 const dontCacheUser =  function (req, res, next) {
     res.use_express_redis_cache = !req.user;
