@@ -53,7 +53,7 @@ router
 
     .get('/cache/clear', async (req, res) => {
         const deleted = await Promise.resolve((resolve, reject) => {
-            cache.del('shrl*', (err, deleted) => {
+            cache.del('*', (err, deleted) => {
                 if (err) {
                     reject(err);
                 }
