@@ -64,11 +64,11 @@
 
 @include non-critical {
     a {
-        color: var(--color-primary);
+        color: var(--color-white);
         text-decoration: none;
 
         &:hover {
-            color: var(--color-secondary);
+            color: var(--color-white-secondary);
         }
     }
 }

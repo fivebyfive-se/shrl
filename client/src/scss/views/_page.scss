@@ -1,29 +1,35 @@
 @include critical {
     .page {
+        @include padding(1);
+
         &__title {
-            color: var(--color-primary);
+            color: var(--color-white);
         }
 
         &__intro {
-            color: var(--color-secondary);
+            color: var(--color-white-secondary);
             p {
                 @extend %font--large;
                 @include margin-y(.5, 1);
             }
         }
+        &__body {
+            color: var(--color-white);
+        }
     }
 
     h3 {
-        color: var(--color-tertiary);
+        color: var(--color-white-secondary);
     }
 
     .slices {
-        border-top: 1px dashed var(--color-background-secondary);
+        border-top: 1px dashed var(--color-white-secondary);
     }
 
 
     .pricing {
         @include margin-top(1);
+        @include padding(1);
 
         &__levels {
             @extend %flex,
@@ -59,7 +65,7 @@
 
             &:nth-child(even) {
                 @include padding-x(1);
-                background-color: var(--color-background-secondary);
+                background-color: var(--color-dark-red);
             }
 
             .level {

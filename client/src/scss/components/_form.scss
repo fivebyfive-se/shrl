@@ -3,13 +3,19 @@
         $self: &;
         @extend %flex,
             %flex--column;
+        @include padding(1);
 
-        background-color: transparent;
-        color: var(--color-text-secondary);
+        background-color: var(--color-white);
+        color: var(--color-black);
         width: 100%;
 
+        a {
+            color: var(--color-red);
+            text-decoration: underline;
+        }
+
         &__section {
-            @include margin(.5);
+            @include padding(.5);
             max-width: get-setting(layout, form-width);
 
             &--buttons {
@@ -56,17 +62,20 @@
         }
     
         #{$self}__field {
-            background-color: var(--color-background);
-            border-color: var(--color-text);
-            color: var(--color-text);
+            background-color: var(--color-white);
+            border-color: var(--color-black);
+            color: var(--color-black);
         
             &:focus {
                 outline: none;
-                box-shadow: 0 0 4px var(--color-primary);
+                box-shadow: 0 0 4px var(--color-orange);
     
                 &:not(.invalid) {
-                    border-color: var(--color-primary);
+                    border-color: var(--color-yellow);
                 }
+            }
+            &::placeholder {
+                color: var(--color-black-secondary);
             }
     
             &--display {
@@ -78,7 +87,7 @@
                     padding-left: 0;
     
                     background: transparent;
-                    color: var(--color-primary);
+                    color: var(--color-red);
                     border-color: transparent;
     
                     & + #{$self}__field__icon--validation {
@@ -109,8 +118,8 @@
 
             @include padding(1, 2);
     
-            background-color: var(--color-primary);
-            color: var(--color-primary-text);
+            background-color: var(--color-red);
+            color: var(--color-white);
     
             cursor: pointer;
             width: auto;

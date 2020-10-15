@@ -1,9 +1,10 @@
 extends _layout.pug
 
 block content
-    h2.page__title !{page.getText('page.title')}
-    div.page__intro !{page.getStructuredText('page.intro').asHtml(ctx.linkResolver)}
-    div.page__body !{page.getStructuredText('page.body').asHtml(ctx.linkResolver)}
+    .page
+        h2.page__title !{page.getText('page.title')}
+        div.page__intro !{page.getStructuredText('page.intro').asHtml(ctx.linkResolver)}
+        div.page__body !{page.getStructuredText('page.body').asHtml(ctx.linkResolver)}
     
     section.slices
         for slice in page.getSliceZone('page.body1').slices

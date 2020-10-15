@@ -3,8 +3,8 @@
         margin: 0;
         padding: 0;
 
-        background-color: var(--color-background-secondary);
-        color: var(--color-text);
+        background-color: var(--color-white-secondary);
+        color: var(--color-black);
         min-height: 100vh;
     }
     header, main, footer {
@@ -13,7 +13,8 @@
         max-width: get-setting(grid, max-width);
     }
     main {
-        background-color: var(--color-background);
+        background-color: var(--color-red);
+        color: var(--color-black);
         min-height: 50vh;
 
         &.two-column {
@@ -26,7 +27,7 @@
                 }
                 > aside {
                     @include flex-item-width(25%);
-                    border-left: 1px solid var(--color-background-secondary);
+                    border-left: 1px solid var(--color-white-secondary);
                 }    
             }
             @include mobile-only {
@@ -35,12 +36,9 @@
                     width: 100%;
                 }
                 > aside {
-                    border-top: 2px solid var(--color-background-secondary);
+                    border-top: 2px solid var(--color-white-secondary);
                 }
             }
-        }
-        > section, > aside {
-            @include padding(1);
         }
     }
     .navigation {
@@ -58,8 +56,12 @@
         a.logo svg {
             width: 93px;
             height: 79px;
-            fill: var(--color-text);
-            stroke: var(--color-text);
+            .logo__text {
+                fill: var(--color-black);
+            }
+            .logo__line {
+                stroke: var(--color-black);
+            }
         }
     }
     .nav {
@@ -77,7 +79,7 @@
             @include margin-x(1);
             @include padding(.5, 1);
 
-            color: var(--color-text);
+            color: var(--color-black);
             text-decoration: none;
             border-bottom: 2px solid transparent;
 
@@ -85,8 +87,8 @@
                 margin-right: 2px;
             }
             &--active {
-                color: var(--color-secondary);
-                border-bottom-color: var(--color-secondary);
+                color: var(--color-red);
+                border-bottom-color: var(--color-red);
             }
             @include mobile-only {
                 @include margin-x(.5);
@@ -128,13 +130,17 @@
         }
     }
     a.logo:hover svg {
-        fill: var(--color-primary);
-        stroke: var(--color-tertiary);
+        .logo__text {
+            fill: var(--color-dark-red);
+        }
+        .logo__line {
+            stroke: var(--color-red);
+        }
     }
     .nav__item:hover {
-        color: var(--color-secondary);
+        color: var(--color-dark-red);
         i {
-            color: var(--color-quaternary);
+            color: var(--color-dark-red);
         }
     }
 }
