@@ -2,8 +2,6 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
 
-require('dotenv').config();
-
 // const CachePugTemplates = require('cache-pug-templates');
 
 const expressSession = require('express-session');
@@ -13,10 +11,7 @@ const session = require('./server/lib/session');
 const ensureHttps = require('./server/lib/middleware/ensure-https');
 const userInViews = require('./server/lib/middleware/user-in-views');
 
-const authRouter = require('./server/routes/auth');
-const userRouter = require('./server/routes/user');
-const urlRouter = require('./server/routes/url');
-const rootRouter = require('./server/routes/root');
+const router = require('./server/routes');
 
 const i18n = require('i18n');
 
@@ -53,10 +48,7 @@ app
     .set('views', views)
     .set('view engine', 'pug')
 
-    .use('/auth', authRouter)
-    .use('/user', userRouter)
-    .use('/url', urlRouter)
-    .use('/', rootRouter)
+    .use('/', router)
 
     .listen(PORT, () => {
         console.log(`Listening on ${PORT}`);

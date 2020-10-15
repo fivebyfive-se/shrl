@@ -1,8 +1,8 @@
-require('dotenv').config();
 const Redis = require('ioredis');
 const redis = new Redis(process.env.REDIS_URL, { connectTimeout: 60000 });
 
 redis.on('error', (...args) => console.log(args));
+
 const wrapper = (prefix = null) => {
     const keyPrefix = prefix || '';
 
@@ -147,6 +147,8 @@ const wrapper = (prefix = null) => {
     };
     
     return {
+        client: redis,
+        
         exists: safeExists,
         get: safeGet,
         set: safeSet,

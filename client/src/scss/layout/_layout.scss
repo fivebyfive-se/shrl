@@ -14,6 +14,8 @@
     }
     main {
         background-color: var(--color-background);
+        min-height: 50vh;
+
         &.two-column {
             @extend %flex,
                 %flex--justify-space-between;
@@ -43,7 +45,7 @@
     }
     .navigation {
         @extend %flex,
-            %flex--justify-flex-start,
+            %flex--justify-space-between,
             %flex--align-flex-end;
 
         @include margin-y(1);
@@ -62,7 +64,7 @@
     }
     .nav {
         @extend %flex,
-            %flex--justify-flex-start,
+            %flex--justify-flex-end,
             %flex--align-center;
      
         &__item {
@@ -79,6 +81,9 @@
             text-decoration: none;
             border-bottom: 2px solid transparent;
 
+            i {
+                margin-right: 2px;
+            }
             &--active {
                 color: var(--color-secondary);
                 border-bottom-color: var(--color-secondary);
@@ -96,12 +101,30 @@
 }
 
 @include non-critical {
-    footer .navigation  {
-        @extend %flex--align-flex-start,
-            %flex--justify-flex-start;
-        flex-direction: row-reverse;
+    footer {
+        @extend %flex,
+            %flex--justify-space-between,
+            %flex--align-flex-start;
+
+        a.logo { display: none; }
+
+        .navigation  {
+            @extend %flex--align-flex-start,
+                %flex--justify-flex-end;
+        }
         .nav {
-            flex-direction: row-reverse;
+            @extend %flex--column;
+            
+            .nav__item {
+                @include padding-x(0);
+                flex-direction: row-reverse;
+                margin: 0;
+
+                i {
+                    margin-left: 2px;
+                    margin-right: 0;
+                }
+            }
         }
     }
     a.logo:hover svg {

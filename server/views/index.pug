@@ -23,35 +23,40 @@ mixin formfieldvalidationmessage(id, message)
     div(class=itemClass('form', 'field', 'validation-message'), data-message-for=id)= message
 
 block content
+    h2.page__title !{page.getText('page.title')}
+    div.page__intro !{page.getStructuredText('page.intro').asHtml(ctx.linkResolver)}
+ 
     form#main-form.form(disabled)
-        +formsection('url')
-            +formlabel('url', __('form.field.url.label:URL to shorten'), __('form.field.url.sublabel:http or https'))
-            +formfieldcontainer('with-icon')
-                +formfield('url', 'link', 'text', 'fill')(placeholder=__('form.field.url.placeholder:https://example.com'))
-            +formfieldvalidationmessage('url', __("form.field.url.validation-message:URL doesn't look right"))
+            +formsection('url')
+                +formlabel('url', __('form.field.url.label'), __('form.field.url.sublabel'))
+                +formfieldcontainer('with-icon')
+                    +formfield('url', 'link', 'url', 'fill')(placeholder=__('form.field.url.placeholder'))
+                +formfieldvalidationmessage('url', __('form.field.url.validation-message'))
 
-        +formsection('key')(style='display: none')
-            if locals.user && app_data && app_data.level >= 1
-                +formlabel('key', __('form.field.key.label:Shortened URL'), __('form.field.key.sublabel:min %s characters, only alphanumeric characters', 5))
-                +formfieldcontainer('with-prefix')
-                    span= __('form.field.key.prefix:https://shrl.cc/')
-                    +formfield('key', null, 'text', 'display')(value=suggestion, minlength=5, maxlength=255)
-                +formfieldvalidationmessage('key', __("form.field.key.validation-message:The chosen short-code is already in use"))
-            else
-                .form__label= __('form.field.key.label:Shortened URL')
-                +formfieldcontainer('with-prefix')
-                    input(type='hidden', id='key', value=suggestion)
-                    span= __('form.field.key.prefix:https://shrl.cc/')
-                    .form__field.form__field--display= suggestion
-                .form__field__help-message 
-                    | #[a(href='/auth/login')= __('form.login-or-register.button:Log in or register')] 
-                    = __('form.login-or-register.suffix:to enable changing generated URL')
-                    | .
+            +formsection('key')(style='display: none')
+                if locals.user && app_data && app_data.level >= 1
+                    +formlabel('key', __('form.field.key.label:Shortened URL'), __('form.field.key.sublabel', 5))
+                    +formfieldcontainer('with-prefix')
+                        span= __('form.field.key.prefix:https://shrl.cc/')
+                        +formfield('key', null, 'text', 'display')(value=suggestion, minlength=5, maxlength=255)
+                    +formfieldvalidationmessage('key', __('form.field.key.validation-message'))
+                else
+                    .form__label= __('form.field.key.label:Shortened URL')
+                    +formfieldcontainer('with-prefix')
+                        input(type='hidden', id='key', value=suggestion)
+                        span= __('form.field.key.prefix:https://shrl.cc/')
+                        .form__field.form__field--display= suggestion
+                    .form__field__help-message 
+                        | #[a(href='/auth/login')= __('form.login-or-register.button:Log in or register')] 
+                        = __('form.login-or-register.suffix:to enable changing generated URL')
+                        | .
 
-        +formsection('button', 'buttons')
-            button#submit-button.button.button--primary(class=itemWithVariants('form', 'button', 'fill'), type='submit')
-                i.ri-add-circle-fill.form__button__icon
-                span= __('form.submit-button:Create shortened link')
+            +formsection('button', 'buttons')
+                button#submit-button.button.button--primary(class=itemWithVariants('form', 'button', 'fill'), type='submit')
+                    i.ri-add-circle-fill.form__button__icon
+                    span= __('form.submit-button:Create shortened link')
+
+    div.page__body !{page.getStructuredText('page.body').asHtml(ctx.linkResolver)}
 
     div#result
 

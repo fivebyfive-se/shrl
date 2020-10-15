@@ -1,8 +1,6 @@
 const PrismicDOM = require('prismic-dom');
 const prismic = require('prismic.io');
 
-require('dotenv').config();
-
 function linkResolver(doc) {
     // Define the url depending on the document type
     if (doc.type === 'page') {

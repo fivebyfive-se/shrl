@@ -1,3 +1,12 @@
+
+
+/* Color Theme Swatches in HSLA */
+$A-pink-one-1-hsla: hsla(240, 100, 2, 1);
+$A-pink-one-2-hsla: hsla(330, 15, 23, 1);
+$A-pink-one-3-hsla: hsla(338, 100, 63, 1);
+$A-pink-one-4-hsla: hsla(0, 0, 94, 1);
+$A-pink-one-5-hsla: hsla(333, 38, 58, 1);
+
 $settings: (
     breakpoint: (
         mobile: (max-width: 700px),
@@ -12,23 +21,23 @@ $settings: (
     grid: (
         num-cols: 12,
         gutter: 4rem,
-        max-width: 1400px
+        max-width: 1200px
     ),
 
     color: (
-        text:  #111,
-        text-secondary: #333,
-        background: #eee,
-        background-secondary: #ddd,
+        text:  hsla(0, 20, 5, 1),
+        text-secondary: hsla(0, 20, 20, 1),
+        background: hsla(0, 20, 90, 1),
+        background-secondary: hsla(0, 10, 80, 1),
 
 
-        primary: #077,
-        secondary: #057,
-        tertiary: #ba0,
-        quaternary:  #770,
+        primary:  hsla(0, 70, 40, 1),
+        secondary:hsla(20, 70, 40, 1),
+        tertiary:hsla(40, 90, 20, 1),
+        quaternary: hsla(0, 90, 20, 1),
 
-        success: #4b7,
-        error: #b44
+        success: hsla(80, 100, 20, 1),
+        error: hsla(340, 100, 20, 1)
     ),
 
     rem-height: 9px,

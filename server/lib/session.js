@@ -1,4 +1,3 @@
-require('dotenv').config();
 const expressSession = require('express-session');
 const Redis = require('ioredis');
 

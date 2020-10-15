@@ -2,24 +2,27 @@ const express = require('express');
 
 const parse = require('url-parse');
 
-const Redis = require('ioredis');
-
 const redis = require('../lib/rediswrapper')('url_');
 const keyutil = require('../lib/util/key');
 
-const validateKey = require('../lib/middleware/validate-key');
 const renderViewData = require('../lib/middleware/render-view-data');
 const injectPrismic = require('../lib/middleware/prismic-dom');
 
-const cacheClient = new Redis(process.env.REDIS_URL, { connectTimeout: 30000 });
-cacheClient.on('error', (...args) => console.log(args));
+
+const authRouter = require('./auth');
+const userRouter = require('./user');
+const urlRouter = require('./url');
+
 const cache = require('express-redis-cache')({
-     client: cacheClient,
-     prefix: 'shrl'
+     client: redis.client,
+     prefix: 'shrl',
+     expire: 60 * 60 // 1 hour
 });
 
+cache.on('error', (e) => console.log(e));
+
 const dontCacheUser =  function (req, res, next) {
-    res.use_express_redis_cache = !req.user;
+    res.use_express_redis_cache = false; //!req.user;
  
     next();
 };
@@ -27,11 +30,17 @@ const dontCacheUser =  function (req, res, next) {
 const router = express.Router();
 
 router
+    .use('/auth', authRouter)
+    .use('/user', userRouter)
+    .use('/url', urlRouter)
+
     .use(renderViewData)
 
-    .get('/', dontCacheUser, cache.route({ expire: 15000 }), (req, res) => {
+    .get('/', injectPrismic, dontCacheUser, cache.route(), async (req, res) => {
+        const start = await req.prismicApi.getByUID('page', 'start', { lang: req.getLocale() === 'sv' ? 'sv-SE' : 'en-US' });
         const suggestion = keyutil.generate(process.env.KEY_DEFAULT_LENGTH || 5);
         res.renderView('index', { 
+            page: start,
             suggestion,
             minKeyLength: 5 - (req.appData ? req.appData.userLevel : 0)
         });
@@ -54,13 +63,18 @@ router
         res.renderView('notfound', { key, invalidKey: key && !keyutil.valid(key) })
     })
 
-    .get('/page/:page', dontCacheUser, cache.route(), injectPrismic, async (req, res) => {
-        const page = await req.prismicApi.getByUID('page', req.params.page, {});
-        res.renderView('page', {
-            view: `page:${req.params.page}`,
-            subtitle: '',
-            page
-        });
+    .get('/page/:page', injectPrismic, dontCacheUser, cache.route(), async (req, res) => {
+        const page = await req.prismicApi.getByUID('page', req.params.page, { lang: req.getLocale() === 'sv' ? 'sv-SE' : 'en-US' });
+        
+        if (!page) {
+            res.redirect('/404');
+        } else {
+            res.renderView('page', {
+                view: `page:${req.params.page}`,
+                subtitle: '',
+                page
+            });    
+        }
     })
 
     .get('/:key', cache.route(), async (req, res) => {

@@ -6,12 +6,11 @@
 
         background-color: transparent;
         color: var(--color-text-secondary);
-        width: get-setting(layout, form-width);
-        max-width: 100%;
-
+        width: 100%;
 
         &__section {
             @include margin(.5);
+            max-width: get-setting(layout, form-width);
 
             &--buttons {
                 @extend %flex,

@@ -1,8 +1,42 @@
 {
-    "app": {
-        "title": {
-            "default": "SHRRL",
-            "subtitle": "SHRRL: %s"
-        }
-    }
+	"app": {
+		"title": {
+			"default": "SHRL",
+			"subtitle": "SHRL: %s"
+		}
+	},
+	"navigation": {
+		"about": "Om SHRL",
+		"log-in": "Logga in"
+	},
+	"form": {
+		"field": {
+			"url": {
+				"label": "URL att korta",
+				"sublabel": "http eller https",
+				"placeholder": "https://example.com",
+				"validation-message": "URL:en ser inte rätt ut"
+			},
+			"key": {
+				"label": "URL-namn",
+				"prefix": "https://shrl.cc/",
+				"validation-message": "Det namnet används redan"
+			}
+		},
+		"login-or-register": {
+			"button": "Logga in eller registrera dig",
+			"suffix": "för att kunna ändra kortlänken"
+		},
+		"submit-button": "Skapa kortlänk"
+	},
+	"page": {
+		"pricing": "Priser"
+	},
+	"btn": {
+		"go-to-link": "Gå till URL",
+		"delete": "Radera",
+		"back-to-homepage": "Tillbaka till SHRL.cc",
+		"buy": "Gå med som %s",
+		"coming-soon": "Kommer snart"
+	}
 }
